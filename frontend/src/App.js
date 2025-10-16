@@ -1,50 +1,37 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+import React from 'react';
+import '@/App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Blog from './pages/Blog';
+import PostDetail from './pages/PostDetail';
+import Category from './pages/Category';
+import About from './pages/About';
+import AdminDashboard from './pages/admin/Dashboard';
+import AdminPosts from './pages/admin/Posts';
+import AdminPostEditor from './pages/admin/PostEditor';
+import AdminCategories from './pages/admin/Categories';
+import AdminComments from './pages/admin/Comments';
+import AdminNewsletter from './pages/admin/Newsletter';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/post/:slug" element={<PostDetail />} />
+          <Route path="/category/:category" element={<Category />} />
+          <Route path="/about" element={<About />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/posts" element={<AdminPosts />} />
+          <Route path="/admin/posts/new" element={<AdminPostEditor />} />
+          <Route path="/admin/posts/edit/:id" element={<AdminPostEditor />} />
+          <Route path="/admin/categories" element={<AdminCategories />} />
+          <Route path="/admin/comments" element={<AdminComments />} />
+          <Route path="/admin/newsletter" element={<AdminNewsletter />} />
         </Routes>
       </BrowserRouter>
     </div>
