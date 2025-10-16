@@ -423,24 +423,34 @@ const PostDetail = () => {
             <div className="bg-white rounded-xl p-6 border border-gray-200 mb-8">
               <h4 className="text-lg font-semibold text-gray-900 mb-4">Deja un comentario</h4>
               <form onSubmit={handleCommentSubmit} data-testid="comment-form">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <input
-                    type="text"
-                    placeholder="Tu nombre"
-                    value={commentForm.author_name}
-                    onChange={(e) => setCommentForm({...commentForm, author_name: e.target.value})}
-                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    data-testid="comment-name-input"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Tu email"
-                    value={commentForm.author_email}
-                    onChange={(e) => setCommentForm({...commentForm, author_email: e.target.value})}
-                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    data-testid="comment-email-input"
-                  />
-                </div>
+                {!isAuthenticated && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <input
+                      type="text"
+                      placeholder="Tu nombre"
+                      value={commentForm.author_name}
+                      onChange={(e) => setCommentForm({...commentForm, author_name: e.target.value})}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      data-testid="comment-name-input"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Tu email"
+                      value={commentForm.author_email}
+                      onChange={(e) => setCommentForm({...commentForm, author_email: e.target.value})}
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      data-testid="comment-email-input"
+                    />
+                  </div>
+                )}
+                {isAuthenticated && (
+                  <div className="mb-4 flex items-center gap-3 text-sm text-gray-600">
+                    <div className="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-semibold">
+                      {user?.name?.charAt(0).toUpperCase()}
+                    </div>
+                    <span>Comentando como <span className="font-semibold">{user?.name}</span></span>
+                  </div>
+                )}
                 <textarea
                   placeholder="Escribe tu comentario..."
                   value={commentForm.content}
@@ -449,6 +459,11 @@ const PostDetail = () => {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 mb-4"
                   data-testid="comment-content-input"
                 />
+                {!isAuthenticated && (
+                  <p className="text-sm text-amber-600 mb-4">
+                    ℹ️ Los comentarios anónimos requieren aprobación del admin
+                  </p>
+                )}
                 <button 
                   type="submit" 
                   disabled={submittingComment}
