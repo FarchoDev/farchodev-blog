@@ -1,4 +1,5 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
+from fastapi.responses import RedirectResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -10,6 +11,17 @@ from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 import re
+import secrets
+
+# Import auth module
+from auth import (
+    User, UserRegister, UserLogin, UserPublic, UserProfile,
+    hash_password, verify_password, create_access_token, 
+    get_current_user, require_admin,
+    create_github_auth_url, exchange_github_code, get_github_user,
+    get_google_user_from_session, create_or_update_user, create_session, delete_session
+)
+from features import PostLike, Bookmark, UserActivity
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
