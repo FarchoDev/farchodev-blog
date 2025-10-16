@@ -261,13 +261,19 @@ frontend:
     implemented: true
     working: "NA"
     file: "/app/frontend/src/contexts/AuthContext.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "✅ IMPLEMENTADO - Creado AuthContext con hooks useAuth. Funciones: register, login, logout, checkAuth. Estado: user, loading, isAuthenticated, isAdmin. Uso de cookies para session_token. Integración con backend API /api/auth/*"
+      - working: false
+        agent: "user"
+        comment: "🐛 PROBLEMA REPORTADO - Real-time UI Updates no funcionan. Después de registrarse o iniciar sesión, la UI no se actualiza para mostrar el usuario autenticado"
+      - working: "NA"
+        agent: "main"
+        comment: "🔧 FIX APLICADO - Identificado problema: Frontend esperaba data.user pero backend devuelve data directamente. Corregido en líneas 64 y 88 de AuthContext.js: setUser(data) en lugar de setUser(data.user). Esto debería resolver el problema de actualización de UI en tiempo real"
 
   - task: "Modal de Login con tabs (Local, Google, GitHub)"
     implemented: true
