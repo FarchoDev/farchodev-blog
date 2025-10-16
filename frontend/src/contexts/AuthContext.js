@@ -61,8 +61,8 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.detail || 'Error en el registro');
       }
 
-      setUser(data.user);
-      return { success: true, user: data.user };
+      setUser(data);
+      return { success: true, user: data };
     } catch (error) {
       return { success: false, error: error.message };
     }
