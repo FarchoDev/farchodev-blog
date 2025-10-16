@@ -477,17 +477,82 @@ const PostDetail = () => {
 
             {/* Comments List */}
             <div className="space-y-6" data-testid="comments-list">
-              {comments.map(comment => (
-                <div key={comment.id} className="bg-white rounded-xl p-6 border border-gray-200" data-testid={`comment-${comment.id}`}>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-semibold text-gray-900">{comment.author_name}</span>
-                    <span className="text-sm text-gray-500">
-                      {format(new Date(comment.created_at), "d 'de' MMMM, yyyy", { locale: es })}
-                    </span>
+              {comments.map(comment => {
+                const isOwnComment = isAuthenticated && user && comment.user_id === user.id;
+                const isEditing = editingCommentId === comment.id;
+
+                return (
+                  <div key={comment.id} className="bg-white rounded-xl p-6 border border-gray-200" data-testid={`comment-${comment.id}`}>
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-semibold">
+                          {comment.author_name?.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <span className="font-semibold text-gray-900 block">{comment.author_name}</span>
+                          <span className="text-xs text-gray-500">
+                            {format(new Date(comment.created_at), "d 'de' MMMM, yyyy", { locale: es })}
+                            {comment.updated_at && comment.updated_at !== comment.created_at && ' (editado)'}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {/* Edit/Delete buttons for own comments */}
+                      {isOwnComment && !isEditing && (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              setEditingCommentId(comment.id);
+                              setEditCommentContent(comment.content);
+                            }}
+                            className="p-2 text-gray-600 hover:text-teal-600 transition-colors"
+                            title="Editar"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteComment(comment.id)}
+                            className="p-2 text-gray-600 hover:text-red-600 transition-colors"
+                            title="Eliminar"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {isEditing ? (
+                      <div>
+                        <textarea
+                          value={editCommentContent}
+                          onChange={(e) => setEditCommentContent(e.target.value)}
+                          rows="3"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 mb-3"
+                        />
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleEditComment(comment.id)}
+                            className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                          >
+                            Guardar
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEditingCommentId(null);
+                              setEditCommentContent('');
+                            }}
+                            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-gray-700">{comment.content}</p>
+                    )}
                   </div>
-                  <p className="text-gray-700">{comment.content}</p>
-                </div>
-              ))}
+                );
+              })}
               {comments.length === 0 && (
                 <p className="text-center text-gray-500">Aún no hay comentarios. ¡Sé el primero en comentar!</p>
               )}
