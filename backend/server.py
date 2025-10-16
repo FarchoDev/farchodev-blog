@@ -250,6 +250,477 @@ async def subscribe_newsletter(data: NewsletterSubscribe):
     await db.newsletter.insert_one(doc)
     return newsletter_obj
 
+# ============================================================================
+# AUTHENTICATION ROUTES
+# ============================================================================
+
+@api_router.post("/auth/register", response_model=UserPublic)
+async def register(user_data: UserRegister, response: Response):
+    """Register a new user with local auth"""
+    # Check if user already exists
+    existing_user = await db.users.find_one({"email": user_data.email})
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    # Create user
+    password_hash = hash_password(user_data.password)
+    user = await create_or_update_user(
+        db,
+        email=user_data.email,
+        name=user_data.name,
+        picture=None,
+        provider="local",
+        password_hash=password_hash
+    )
+    
+    # Create JWT token
+    token = create_access_token({
+        "user_id": user.id,
+        "email": user.email,
+        "role": user.role
+    })
+    
+    # Set cookie
+    response.set_cookie(
+        key="session_token",
+        value=token,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        max_age=60 * 60 * 24 * 7  # 7 days
+    )
+    
+    return UserPublic(
+        id=user.id,
+        email=user.email,
+        name=user.name,
+        picture=user.picture,
+        role=user.role,
+        provider=user.provider
+    )
+
+@api_router.post("/auth/login", response_model=UserPublic)
+async def login(credentials: UserLogin, response: Response):
+    """Login with local auth"""
+    # Find user
+    user_doc = await db.users.find_one({"email": credentials.email})
+    if not user_doc:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    
+    user = User(**user_doc)
+    
+    # Verify password
+    if not user.password_hash or not verify_password(credentials.password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    
+    # Update last login
+    await db.users.update_one(
+        {"id": user.id},
+        {"$set": {"last_login": datetime.now(timezone.utc)}}
+    )
+    
+    # Create JWT token
+    token = create_access_token({
+        "user_id": user.id,
+        "email": user.email,
+        "role": user.role
+    })
+    
+    # Set cookie
+    response.set_cookie(
+        key="session_token",
+        value=token,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        max_age=60 * 60 * 24 * 7  # 7 days
+    )
+    
+    return UserPublic(
+        id=user.id,
+        email=user.email,
+        name=user.name,
+        picture=user.picture,
+        role=user.role,
+        provider=user.provider
+    )
+
+@api_router.post("/auth/logout")
+async def logout(request: Request, response: Response):
+    """Logout user"""
+    token = request.cookies.get("session_token")
+    if token:
+        # Delete session if it's an OAuth session
+        await delete_session(db, token)
+    
+    # Clear cookie
+    response.delete_cookie(
+        key="session_token",
+        httponly=True,
+        secure=True,
+        samesite="none"
+    )
+    
+    return {"message": "Logged out successfully"}
+
+@api_router.get("/auth/me", response_model=UserPublic)
+async def get_me(request: Request):
+    """Get current user"""
+    user = await get_current_user(request, db)
+    return UserPublic(
+        id=user.id,
+        email=user.email,
+        name=user.name,
+        picture=user.picture,
+        role=user.role,
+        provider=user.provider
+    )
+
+# Google OAuth (Emergent Auth)
+@api_router.get("/auth/google/login")
+async def google_login(redirect_url: str):
+    """Redirect to Emergent Google OAuth"""
+    auth_url = f"https://auth.emergentagent.com/?redirect={redirect_url}"
+    return {"auth_url": auth_url}
+
+@api_router.post("/auth/google/callback")
+async def google_callback(session_id: str, response: Response):
+    """Handle Google OAuth callback"""
+    # Get user data from Emergent
+    google_data = await get_google_user_from_session(session_id)
+    
+    # Create or update user
+    user = await create_or_update_user(
+        db,
+        email=google_data["email"],
+        name=google_data["name"],
+        picture=google_data.get("picture"),
+        provider="google"
+    )
+    
+    # Create session with the Emergent session_token
+    session_token = google_data["session_token"]
+    await create_session(db, user.id, "google", session_token)
+    
+    # Set cookie
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        max_age=60 * 60 * 24 * 7  # 7 days
+    )
+    
+    return UserPublic(
+        id=user.id,
+        email=user.email,
+        name=user.name,
+        picture=user.picture,
+        role=user.role,
+        provider=user.provider
+    )
+
+# GitHub OAuth
+@api_router.get("/auth/github/login")
+async def github_login():
+    """Initiate GitHub OAuth flow"""
+    state = secrets.token_urlsafe(32)
+    auth_url = create_github_auth_url(state)
+    
+    # In a real implementation, you'd store the state temporarily
+    # For simplicity, we're returning it to be validated later
+    return {"auth_url": auth_url, "state": state}
+
+@api_router.get("/auth/github/callback")
+async def github_callback(code: str, state: str, response: Response):
+    """Handle GitHub OAuth callback"""
+    # Exchange code for access token
+    token_data = await exchange_github_code(code)
+    access_token = token_data.get("access_token")
+    
+    if not access_token:
+        raise HTTPException(status_code=400, detail="Failed to get access token")
+    
+    # Get user info from GitHub
+    github_user = await get_github_user(access_token)
+    
+    if not github_user.get("email"):
+        raise HTTPException(status_code=400, detail="Email not available from GitHub")
+    
+    # Create or update user
+    user = await create_or_update_user(
+        db,
+        email=github_user["email"],
+        name=github_user.get("name") or github_user.get("login"),
+        picture=github_user.get("avatar_url"),
+        provider="github"
+    )
+    
+    # Create session token
+    session_token = secrets.token_urlsafe(32)
+    await create_session(db, user.id, "github", session_token)
+    
+    # Set cookie
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        max_age=60 * 60 * 24 * 7  # 7 days
+    )
+    
+    return UserPublic(
+        id=user.id,
+        email=user.email,
+        name=user.name,
+        picture=user.picture,
+        role=user.role,
+        provider=user.provider
+    )
+
+# ============================================================================
+# USER ENGAGEMENT ROUTES (Authenticated users only)
+# ============================================================================
+
+@api_router.post("/posts/{post_id}/like")
+async def like_post(post_id: str, request: Request):
+    """Like a post"""
+    user = await get_current_user(request, db)
+    
+    # Check if already liked
+    existing = await db.post_likes.find_one({"post_id": post_id, "user_id": user.id})
+    if existing:
+        raise HTTPException(status_code=400, detail="Already liked")
+    
+    # Create like
+    like = PostLike(post_id=post_id, user_id=user.id)
+    doc = like.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.post_likes.insert_one(doc)
+    
+    # Get total likes count
+    total_likes = await db.post_likes.count_documents({"post_id": post_id})
+    
+    return {"message": "Post liked", "total_likes": total_likes}
+
+@api_router.delete("/posts/{post_id}/like")
+async def unlike_post(post_id: str, request: Request):
+    """Unlike a post"""
+    user = await get_current_user(request, db)
+    
+    result = await db.post_likes.delete_one({"post_id": post_id, "user_id": user.id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Like not found")
+    
+    # Get total likes count
+    total_likes = await db.post_likes.count_documents({"post_id": post_id})
+    
+    return {"message": "Post unliked", "total_likes": total_likes}
+
+@api_router.get("/posts/{post_id}/likes")
+async def get_post_likes(post_id: str, request: Request):
+    """Get likes count and user's like status"""
+    total_likes = await db.post_likes.count_documents({"post_id": post_id})
+    
+    user_liked = False
+    try:
+        user = await get_current_user(request, db)
+        existing = await db.post_likes.find_one({"post_id": post_id, "user_id": user.id})
+        user_liked = existing is not None
+    except HTTPException:
+        pass  # User not authenticated
+    
+    return {"total_likes": total_likes, "user_liked": user_liked}
+
+@api_router.post("/bookmarks")
+async def add_bookmark(post_id: str, request: Request):
+    """Add a bookmark"""
+    user = await get_current_user(request, db)
+    
+    # Check if already bookmarked
+    existing = await db.bookmarks.find_one({"post_id": post_id, "user_id": user.id})
+    if existing:
+        raise HTTPException(status_code=400, detail="Already bookmarked")
+    
+    # Create bookmark
+    bookmark = Bookmark(post_id=post_id, user_id=user.id)
+    doc = bookmark.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.bookmarks.insert_one(doc)
+    
+    return {"message": "Bookmark added"}
+
+@api_router.delete("/bookmarks/{post_id}")
+async def remove_bookmark(post_id: str, request: Request):
+    """Remove a bookmark"""
+    user = await get_current_user(request, db)
+    
+    result = await db.bookmarks.delete_one({"post_id": post_id, "user_id": user.id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Bookmark not found")
+    
+    return {"message": "Bookmark removed"}
+
+@api_router.get("/bookmarks")
+async def get_bookmarks(request: Request):
+    """Get user's bookmarked posts"""
+    user = await get_current_user(request, db)
+    
+    # Get bookmarks
+    bookmarks = await db.bookmarks.find({"user_id": user.id}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    
+    # Get posts
+    post_ids = [b["post_id"] for b in bookmarks]
+    posts = await db.posts.find({"id": {"$in": post_ids}}, {"_id": 0}).to_list(1000)
+    
+    # Convert datetime strings
+    for post in posts:
+        for field in ['created_at', 'updated_at', 'published_at']:
+            if field in post and isinstance(post[field], str):
+                post[field] = datetime.fromisoformat(post[field])
+    
+    return posts
+
+@api_router.get("/posts/{post_id}/bookmark-status")
+async def get_bookmark_status(post_id: str, request: Request):
+    """Check if user has bookmarked a post"""
+    try:
+        user = await get_current_user(request, db)
+        existing = await db.bookmarks.find_one({"post_id": post_id, "user_id": user.id})
+        return {"bookmarked": existing is not None}
+    except HTTPException:
+        return {"bookmarked": False}
+
+# Enhanced comments for authenticated users
+@api_router.post("/comments", response_model=Comment)
+async def create_comment_auth(comment_data: CommentCreate, request: Request):
+    """Create a comment (authenticated users)"""
+    user = await get_current_user(request, db)
+    
+    comment_obj = Comment(
+        post_id=comment_data.post_id,
+        user_id=user.id,
+        author_name=user.name,
+        author_email=user.email,
+        content=comment_data.content,
+        approved=True  # Auto-approve for authenticated users
+    )
+    
+    doc = comment_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.comments.insert_one(doc)
+    return comment_obj
+
+@api_router.put("/comments/{comment_id}", response_model=Comment)
+async def update_comment(comment_id: str, comment_data: CommentUpdate, request: Request):
+    """Update own comment"""
+    user = await get_current_user(request, db)
+    
+    # Check if comment exists and belongs to user
+    comment = await db.comments.find_one({"id": comment_id, "user_id": user.id})
+    if not comment:
+        raise HTTPException(status_code=404, detail="Comment not found or unauthorized")
+    
+    # Update comment
+    update_dict = {
+        "content": comment_data.content,
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.comments.update_one({"id": comment_id}, {"$set": update_dict})
+    
+    # Get updated comment
+    updated_comment = await db.comments.find_one({"id": comment_id}, {"_id": 0})
+    
+    for field in ['created_at', 'updated_at']:
+        if field in updated_comment and updated_comment[field] and isinstance(updated_comment[field], str):
+            updated_comment[field] = datetime.fromisoformat(updated_comment[field])
+    
+    return Comment(**updated_comment)
+
+@api_router.delete("/comments/{comment_id}")
+async def delete_own_comment(comment_id: str, request: Request):
+    """Delete own comment"""
+    user = await get_current_user(request, db)
+    
+    # Check if comment exists and belongs to user
+    result = await db.comments.delete_one({"id": comment_id, "user_id": user.id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Comment not found or unauthorized")
+    
+    return {"message": "Comment deleted"}
+
+# User profile routes
+@api_router.get("/users/profile", response_model=UserProfile)
+async def get_user_profile(request: Request):
+    """Get user profile"""
+    user = await get_current_user(request, db)
+    
+    profile = await db.user_profiles.find_one({"user_id": user.id}, {"_id": 0})
+    if not profile:
+        # Create profile if doesn't exist
+        profile = UserProfile(user_id=user.id)
+        await db.user_profiles.insert_one(profile.model_dump())
+    
+    return profile
+
+@api_router.put("/users/profile", response_model=UserProfile)
+async def update_user_profile(profile_data: UserProfile, request: Request):
+    """Update user profile"""
+    user = await get_current_user(request, db)
+    
+    update_dict = profile_data.model_dump()
+    update_dict["user_id"] = user.id
+    update_dict["updated_at"] = datetime.now(timezone.utc)
+    
+    await db.user_profiles.update_one(
+        {"user_id": user.id},
+        {"$set": update_dict},
+        upsert=True
+    )
+    
+    return profile_data
+
+@api_router.get("/users/activity", response_model=UserActivity)
+async def get_user_activity(request: Request):
+    """Get user activity summary"""
+    user = await get_current_user(request, db)
+    
+    # Get counts
+    total_comments = await db.comments.count_documents({"user_id": user.id})
+    total_likes = await db.post_likes.count_documents({"user_id": user.id})
+    total_bookmarks = await db.bookmarks.count_documents({"user_id": user.id})
+    
+    # Get recent items
+    recent_comments = await db.comments.find(
+        {"user_id": user.id}, {"_id": 0}
+    ).sort("created_at", -1).limit(5).to_list(5)
+    
+    recent_likes = await db.post_likes.find(
+        {"user_id": user.id}, {"_id": 0}
+    ).sort("created_at", -1).limit(5).to_list(5)
+    
+    recent_bookmarks = await db.bookmarks.find(
+        {"user_id": user.id}, {"_id": 0}
+    ).sort("created_at", -1).limit(5).to_list(5)
+    
+    return UserActivity(
+        total_comments=total_comments,
+        total_likes=total_likes,
+        total_bookmarks=total_bookmarks,
+        recent_comments=recent_comments,
+        recent_likes=recent_likes,
+        recent_bookmarks=recent_bookmarks
+    )
+
 # Admin Routes
 @api_router.get("/admin/posts", response_model=List[Post])
 async def get_all_posts_admin():
