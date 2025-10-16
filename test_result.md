@@ -285,7 +285,7 @@ frontend:
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "✅ IMPLEMENTADO - Modal de Login con 3 tabs (Email, Google, GitHub). Tab Email completamente funcional con validación. Tabs Google y GitHub muestran mensaje 'próximamente' ya que no hay credenciales OAuth configuradas. Incluye manejo de errores y estados de carga."
+        comment: "✅ IMPLEMENTADO - Modal de Login con 3 tabs: Email/Password (local), Google OAuth, GitHub OAuth. Integración con AuthContext. Validaciones de formulario. Switch entre Login y Register. Google/GitHub muestran 'Coming Soon'"
 
   - task: "Modal de Registro"
     implemented: true
