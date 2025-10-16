@@ -130,11 +130,14 @@ backend:
     file: "/app/backend/auth.py, /app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Integración con Emergent Auth para Google OAuth. Endpoints: GET /auth/google/login, POST /auth/google/callback. Maneja session_id y session_token de Emergent."
+      - working: "NA"
+        agent: "testing"
+        comment: "⚠️ NOT TESTED - Google OAuth requires external configuration and Emergent Auth service setup. Endpoints exist but cannot be tested without proper OAuth credentials and external service integration. Implementation appears correct based on code review."
 
   - task: "GitHub OAuth"
     implemented: true
