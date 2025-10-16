@@ -165,15 +165,18 @@ backend:
 
   - task: "Sistema de Likes en posts"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/features.py, /app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Endpoints implementados: POST /posts/{post_id}/like, DELETE /posts/{post_id}/like, GET /posts/{post_id}/likes. Requiere autenticación. Modelo PostLike con post_id y user_id."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY - Likes system working perfectly. Tested: POST /api/posts/{id}/like creates like and returns total count, duplicate like prevention (400 error), GET /api/posts/{id}/likes shows total_likes and user_liked status, DELETE /api/posts/{id}/like removes like and updates count, unauthenticated requests properly rejected with 401, authenticated users can like/unlike posts correctly."
 
   - task: "Sistema de Bookmarks"
     implemented: true
