@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import AdminLayout from '../../components/AdminLayout';
 import { Mail, Download } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const AdminNewsletter = () => {
   const [subscribers, setSubscribers] = useState([]);
@@ -19,7 +16,7 @@ const AdminNewsletter = () => {
   const fetchSubscribers = async () => {
     try {
       // Get all newsletter subscriptions
-      const response = await axios.get(`${API}/admin/stats`);
+      const response = await axiosInstance.get('/admin/stats');
       // Note: In a real implementation, you'd have a dedicated endpoint for subscribers
       // For now, we'll show stats
       setLoading(false);
