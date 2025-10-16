@@ -16,8 +16,8 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       const [statsRes, postsRes] = await Promise.all([
-        axios.get(`${API}/admin/stats`),
-        axios.get(`${API}/admin/posts`)
+        axiosInstance.get('/admin/stats'),
+        axiosInstance.get('/admin/posts')
       ]);
       setStats(statsRes.data);
       setRecentPosts(postsRes.data.slice(0, 5));
