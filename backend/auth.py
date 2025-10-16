@@ -86,6 +86,14 @@ class TokenData(BaseModel):
     role: str
 
 # Utility functions
+def is_admin_email(email: str) -> bool:
+    """Check if an email is in the admin emails list"""
+    return email.lower().strip() in ADMIN_EMAILS
+
+def get_user_role(email: str) -> Literal["admin", "user"]:
+    """Get user role based on email"""
+    return "admin" if is_admin_email(email) else "user"
+
 def hash_password(password: str) -> str:
     """Hash a password"""
     return pwd_context.hash(password)
