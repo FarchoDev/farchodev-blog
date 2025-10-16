@@ -101,3 +101,78 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  Blog de desarrollo (FarchoDev Blog) - El usuario reportó que en el panel de admin, sección de categorías,
+  se pueden crear categorías pero no hay opciones para editarlas después. Se implementó la funcionalidad
+  de editar y eliminar categorías.
+
+backend:
+  - task: "Endpoint PUT para actualizar categorías"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Implementado endpoint PUT /admin/categories/{category_id} para actualizar categorías existentes"
+  
+  - task: "Endpoint DELETE para eliminar categorías"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Implementado endpoint DELETE /admin/categories/{category_id} para eliminar categorías"
+
+frontend:
+  - task: "UI para editar categorías"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/admin/Categories.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Agregado botón de editar con ícono Edit2, formulario reutilizable para crear/editar, manejo de estado editingCategory"
+  
+  - task: "UI para eliminar categorías"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/admin/Categories.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Agregado botón de eliminar con ícono Trash2, confirmación antes de eliminar, toast de éxito/error"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Endpoint PUT para actualizar categorías"
+    - "Endpoint DELETE para eliminar categorías"
+    - "UI para editar categorías"
+    - "UI para eliminar categorías"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Implementada funcionalidad completa de editar y eliminar categorías. Backend tiene endpoints PUT y DELETE. Frontend tiene botones de editar/eliminar en cada tarjeta de categoría. Listo para testing."
