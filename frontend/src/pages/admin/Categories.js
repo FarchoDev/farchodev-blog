@@ -41,15 +41,54 @@ const AdminCategories = () => {
     }
 
     try {
-      await axios.post(`${API}/admin/categories`, formData);
-      toast.success('Categoría creada exitosamente');
+      if (editingCategory) {
+        // Update existing category
+        await axios.put(`${API}/admin/categories/${editingCategory.id}`, formData);
+        toast.success('Categoría actualizada exitosamente');
+      } else {
+        // Create new category
+        await axios.post(`${API}/admin/categories`, formData);
+        toast.success('Categoría creada exitosamente');
+      }
+      
       setFormData({ name: '', description: '' });
       setShowForm(false);
+      setEditingCategory(null);
       fetchCategories();
     } catch (error) {
-      console.error('Error creating category:', error);
-      toast.error('Error al crear la categoría');
+      console.error('Error saving category:', error);
+      toast.error(editingCategory ? 'Error al actualizar la categoría' : 'Error al crear la categoría');
     }
+  };
+
+  const handleEdit = (category) => {
+    setEditingCategory(category);
+    setFormData({
+      name: category.name,
+      description: category.description || ''
+    });
+    setShowForm(true);
+  };
+
+  const handleDelete = async (categoryId, categoryName) => {
+    if (!window.confirm(`¿Estás seguro de eliminar la categoría "${categoryName}"?`)) {
+      return;
+    }
+
+    try {
+      await axios.delete(`${API}/admin/categories/${categoryId}`);
+      toast.success('Categoría eliminada exitosamente');
+      fetchCategories();
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      toast.error('Error al eliminar la categoría');
+    }
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditingCategory(null);
+    setFormData({ name: '', description: '' });
   };
 
   return (
