@@ -15,6 +15,7 @@ const API = `${BACKEND_URL}/api`;
 
 const PostDetail = () => {
   const { slug } = useParams();
+  const { user, isAuthenticated } = useAuth();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +25,14 @@ const PostDetail = () => {
     content: ''
   });
   const [submittingComment, setSubmittingComment] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editCommentContent, setEditCommentContent] = useState('');
+  
+  // Like & Bookmark states
+  const [likeStats, setLikeStats] = useState({ total_likes: 0, user_liked: false });
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [likesLoading, setLikesLoading] = useState(false);
+  const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
   useEffect(() => {
     fetchPost();
