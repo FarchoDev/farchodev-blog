@@ -324,6 +324,40 @@ async def create_category(category_data: CategoryCreate):
     await db.categories.insert_one(doc)
     return category_obj
 
+@api_router.put("/admin/categories/{category_id}", response_model=Category)
+async def update_category(category_id: str, category_data: CategoryCreate):
+    """Update a category (admin)"""
+    existing_category = await db.categories.find_one({"id": category_id})
+    
+    if not existing_category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    
+    slug = create_slug(category_data.name)
+    update_dict = {
+        "name": category_data.name,
+        "slug": slug,
+        "description": category_data.description
+    }
+    
+    await db.categories.update_one({"id": category_id}, {"$set": update_dict})
+    
+    updated_category = await db.categories.find_one({"id": category_id}, {"_id": 0})
+    
+    if 'created_at' in updated_category and isinstance(updated_category['created_at'], str):
+        updated_category['created_at'] = datetime.fromisoformat(updated_category['created_at'])
+    
+    return Category(**updated_category)
+
+@api_router.delete("/admin/categories/{category_id}")
+async def delete_category(category_id: str):
+    """Delete a category (admin)"""
+    result = await db.categories.delete_one({"id": category_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Category not found")
+    
+    return {"message": "Category deleted successfully"}
+
 @api_router.get("/admin/comments", response_model=List[Comment])
 async def get_all_comments_admin():
     """Get all comments including pending (admin)"""
