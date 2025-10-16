@@ -150,15 +150,18 @@ backend:
 
   - task: "Protección de rutas admin con middleware"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Todas las rutas /admin/* ahora requieren autenticación y role='admin'. Usando función require_admin() que verifica el usuario actual."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY - Admin route protection working correctly. Tested: normal users correctly rejected with 403 Forbidden from admin routes, admin users (after role update in DB) can access GET /api/admin/posts and GET /api/admin/stats, unauthenticated requests rejected with 401. Admin middleware properly enforcing role-based access control."
 
   - task: "Sistema de Likes en posts"
     implemented: true
