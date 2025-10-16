@@ -324,40 +324,40 @@ frontend:
         comment: "✅ IMPLEMENTADO - Componente ProtectedRoute con prop requireAdmin. Verifica autenticación y role='admin'. Loading state con spinner. Página de acceso denegado estilizada para no-admin. Todas las rutas /admin/* protegidas en App.js con ProtectedRoute."
 
   - task: "Botones de Like y Bookmark en PostDetail"
-    implemented: false
+    implemented: true
     working: "NA"
-    file: ""
+    file: "/app/frontend/src/pages/PostDetail.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Pendiente: Agregar botones interactivos de like (corazón) y bookmark en página de post"
+        comment: "✅ IMPLEMENTADO - Botones de Like y Bookmark ya estaban implementados en PostDetail.js (líneas 332-386). Funcionalidad completa con estados, animaciones, contadores y mensajes toast. Integrados con endpoints backend /api/posts/{id}/like y /api/bookmarks."
 
   - task: "Sistema de comentarios mejorado"
-    implemented: false
+    implemented: true
     working: "NA"
-    file: ""
+    file: "/app/frontend/src/pages/PostDetail.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Pendiente: Actualizar sección de comentarios para usuarios autenticados con botones edit/delete"
+        comment: "✅ IMPLEMENTADO - Sistema de comentarios mejorado ya estaba implementado en PostDetail.js (líneas 213-256). Incluye: botones edit/delete para propios comentarios (líneas 500-522), validación de propiedad (isOwnComment), modo edición inline con textarea, integración con endpoints PUT/DELETE /api/comments/{id}."
 
   - task: "Página de perfil de usuario (UserProfile)"
-    implemented: false
+    implemented: true
     working: "NA"
-    file: ""
+    file: "/app/frontend/src/pages/UserProfile.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Pendiente: Crear página de perfil con tabs: Info, Bookmarks, Comentarios, Activity"
+        comment: "✅ IMPLEMENTADO - Página completa de perfil de usuario creada en /app/frontend/src/pages/UserProfile.js. Incluye: 4 tabs (Información, Guardados, Comentarios, Actividad), edición de perfil con bio y redes sociales, lista de bookmarks con opción de remover, historial de comentarios con links a posts, actividad reciente de likes y bookmarks. Ruta /profile agregada en App.js. Integrada con endpoints: GET/PUT /api/users/profile, GET /api/users/activity, GET/DELETE /api/bookmarks."
   
   - task: "UI para editar categorías"
     implemented: true
