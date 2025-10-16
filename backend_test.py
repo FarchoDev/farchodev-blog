@@ -221,29 +221,47 @@ class AuthTester:
             self.log_test("GET /api/auth/me", False, f"Exception: {str(e)}")
             return False, None
     
-    def test_update_nonexistent_category(self):
-        """Test PUT with non-existent category ID (should return 404)"""
+    def test_logout(self):
+        """Test POST /api/auth/logout - Verify cookie clearing"""
         try:
-            fake_id = "nonexistent-category-id-12345"
-            payload = {"name": "Should Not Work", "description": "This should fail"}
+            response = self.session.post(f"{API_BASE}/auth/logout")
             
-            response = self.session.put(
-                f"{API_BASE}/admin/categories/{fake_id}",
-                json=payload,
-                headers={"Content-Type": "application/json"}
-            )
-            
-            if response.status_code == 404:
-                self.log_test("PUT /api/admin/categories/{nonexistent_id} (404 test)", True, 
-                            "Correctly returned 404 for non-existent category")
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Verify success message
+                if "message" not in data or "logged out" not in data["message"].lower():
+                    self.log_test("POST /api/auth/logout", False, 
+                                f"Unexpected response format: {data}")
+                    return False
+                
+                # Verify cookie is cleared (check Set-Cookie header)
+                set_cookie_header = response.headers.get('Set-Cookie', '')
+                if 'session_token=' not in set_cookie_header:
+                    self.log_test("POST /api/auth/logout", False, 
+                                "session_token cookie not cleared in response")
+                    return False
+                
+                self.log_test("POST /api/auth/logout", True, 
+                            f"✅ Logout successful. Cookie cleared: {data['message']}")
+                
+                # Verify that subsequent requests are unauthorized
+                me_response = self.session.get(f"{API_BASE}/auth/me")
+                if me_response.status_code == 401:
+                    self.log_test("Verify logout effect", True, 
+                                "✅ Subsequent /auth/me requests correctly return 401")
+                else:
+                    self.log_test("Verify logout effect", False, 
+                                f"Expected 401 after logout, got {me_response.status_code}")
+                
                 return True
             else:
-                self.log_test("PUT /api/admin/categories/{nonexistent_id} (404 test)", False, 
-                            f"Expected 404, got {response.status_code}")
+                self.log_test("POST /api/auth/logout", False, 
+                            f"Status: {response.status_code}, Response: {response.text}")
                 return False
                 
         except Exception as e:
-            self.log_test("PUT /api/admin/categories/{nonexistent_id} (404 test)", False, f"Exception: {str(e)}")
+            self.log_test("POST /api/auth/logout", False, f"Exception: {str(e)}")
             return False
     
     def test_delete_category(self, category_id):
