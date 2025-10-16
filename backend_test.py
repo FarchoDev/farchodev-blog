@@ -319,34 +319,26 @@ class AuthTester:
             self.log_test("POST /api/auth/register (duplicate email)", False, f"Exception: {str(e)}")
             return False
     
-    def verify_category_deleted(self, category_id):
-        """Verify that a deleted category no longer appears in GET /api/categories"""
+    def test_unauthorized_access(self):
+        """Test accessing protected endpoints without authentication"""
         try:
-            success, categories = self.test_get_categories()
-            if not success:
+            # Create a new session without cookies
+            unauth_session = requests.Session()
+            
+            response = unauth_session.get(f"{API_BASE}/auth/me")
+            
+            if response.status_code == 401:
+                self.log_test("GET /api/auth/me (unauthorized)", True, 
+                            "✅ Correctly rejected unauthorized request with 401")
+                return True
+            else:
+                self.log_test("GET /api/auth/me (unauthorized)", False, 
+                            f"Expected 401, got {response.status_code}")
                 return False
-            
-            # Check if the deleted category still exists
-            for category in categories:
-                if category["id"] == category_id:
-                    self.log_test(f"Verify deletion of {category_id}", False, 
-                                "Category still appears in GET /api/categories")
-                    return False
-            
-            self.log_test(f"Verify deletion of {category_id}", True, 
-                        "Category no longer appears in category list")
-            return True
-            
+                
         except Exception as e:
-            self.log_test(f"Verify deletion of {category_id}", False, f"Exception: {str(e)}")
+            self.log_test("GET /api/auth/me (unauthorized)", False, f"Exception: {str(e)}")
             return False
-    
-    def cleanup(self):
-        """Clean up any remaining test categories"""
-        if self.created_categories:
-            print(f"\n🧹 Cleaning up {len(self.created_categories)} remaining test categories...")
-            for category_id in self.created_categories[:]:  # Copy list to avoid modification during iteration
-                self.test_delete_category(category_id)
 
 def main():
     print("🚀 Starting Category Endpoints Testing")
