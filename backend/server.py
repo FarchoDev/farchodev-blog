@@ -103,16 +103,19 @@ class Comment(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     post_id: str
+    user_id: Optional[str] = None  # For authenticated users
     author_name: str
     author_email: str
     content: str
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: Optional[datetime] = None
     approved: bool = False
 
 class CommentCreate(BaseModel):
     post_id: str
-    author_name: str
-    author_email: str
+    content: str
+
+class CommentUpdate(BaseModel):
     content: str
 
 class Newsletter(BaseModel):
