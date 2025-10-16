@@ -19,6 +19,10 @@ SECRET_KEY = os.environ.get('JWT_SECRET_KEY', secrets.token_urlsafe(32))
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 
+# Admin Emails
+ADMIN_EMAILS_STR = os.environ.get('ADMIN_EMAILS', '')
+ADMIN_EMAILS = [email.strip().lower() for email in ADMIN_EMAILS_STR.split(',') if email.strip()]
+
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
