@@ -56,6 +56,8 @@
 
 ## 🚀 Inicio Rápido
 
+> **💡 Para usuarios de Windows**: Consulta la [Guía de Instalación para Windows](./SETUP_WINDOWS.md) con instrucciones detalladas específicas para Windows 10/11.
+
 ### Requisitos Previos
 - Node.js v16+
 - Python 3.9+
