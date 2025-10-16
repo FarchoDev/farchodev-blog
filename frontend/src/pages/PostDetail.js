@@ -63,6 +63,99 @@ const PostDetail = () => {
     }
   };
 
+  const fetchLikeStats = async () => {
+    if (!post) return;
+    try {
+      const response = await axios.get(`${API}/posts/${post.id}/likes`, {
+        withCredentials: true
+      });
+      setLikeStats(response.data);
+    } catch (error) {
+      console.error('Error fetching like stats:', error);
+    }
+  };
+
+  const fetchBookmarkStatus = async () => {
+    if (!post) return;
+    try {
+      const response = await axios.get(`${API}/posts/${post.id}/bookmark-status`, {
+        withCredentials: true
+      });
+      setIsBookmarked(response.data.is_bookmarked);
+    } catch (error) {
+      console.error('Error fetching bookmark status:', error);
+    }
+  };
+
+  const handleLike = async () => {
+    if (!isAuthenticated) {
+      toast.error('Debes iniciar sesión para dar like');
+      return;
+    }
+
+    setLikesLoading(true);
+    try {
+      if (likeStats.user_liked) {
+        // Unlike
+        await axios.delete(`${API}/posts/${post.id}/like`, {
+          withCredentials: true
+        });
+        setLikeStats(prev => ({
+          total_likes: prev.total_likes - 1,
+          user_liked: false
+        }));
+        toast.success('Like removido');
+      } else {
+        // Like
+        await axios.post(`${API}/posts/${post.id}/like`, {}, {
+          withCredentials: true
+        });
+        setLikeStats(prev => ({
+          total_likes: prev.total_likes + 1,
+          user_liked: true
+        }));
+        toast.success('¡Post liked!');
+      }
+    } catch (error) {
+      console.error('Error toggling like:', error);
+      toast.error('Error al dar like');
+    } finally {
+      setLikesLoading(false);
+    }
+  };
+
+  const handleBookmark = async () => {
+    if (!isAuthenticated) {
+      toast.error('Debes iniciar sesión para guardar');
+      return;
+    }
+
+    setBookmarkLoading(true);
+    try {
+      if (isBookmarked) {
+        // Remove bookmark
+        await axios.delete(`${API}/bookmarks/${post.id}`, {
+          withCredentials: true
+        });
+        setIsBookmarked(false);
+        toast.success('Post removido de guardados');
+      } else {
+        // Add bookmark
+        await axios.post(`${API}/bookmarks`, 
+          { post_id: post.id }, 
+          { withCredentials: true }
+        );
+        setIsBookmarked(true);
+        toast.success('Post guardado');
+      }
+    } catch (error) {
+      console.error('Error toggling bookmark:', error);
+      toast.error('Error al guardar post');
+    } finally {
+      setBookmarkLoading(false);
+    }
+  };
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     
