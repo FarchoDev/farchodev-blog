@@ -108,48 +108,63 @@ class AuthTester:
             self.log_test("POST /api/auth/register", False, f"Exception: {str(e)}")
             return False, None
     
-    def test_create_category(self, name, description=None):
-        """Test POST /api/admin/categories - Create a category"""
+    def test_user_login(self):
+        """Test POST /api/auth/login - Critical: Response structure verification"""
         try:
-            payload = {"name": name}
-            if description:
-                payload["description"] = description
-                
+            payload = {
+                "email": self.test_user_email,
+                "password": self.test_user_password
+            }
+            
             response = self.session.post(
-                f"{API_BASE}/admin/categories",
+                f"{API_BASE}/auth/login",
                 json=payload,
                 headers={"Content-Type": "application/json"}
             )
             
             if response.status_code == 200:
-                category = response.json()
-                self.created_categories.append(category["id"])
+                data = response.json()
                 
-                # Verify response structure
-                required_fields = ["id", "name", "slug", "created_at"]
-                missing_fields = [field for field in required_fields if field not in category]
+                # CRITICAL: Verify response structure - should be UserPublic directly, NOT nested in 'user'
+                if "user" in data:
+                    self.log_test("POST /api/auth/login", False, 
+                                f"❌ CRITICAL: Response has nested 'user' field. Frontend expects direct UserPublic object!")
+                    return False, None
+                
+                # Verify required UserPublic fields are present directly in response
+                required_fields = ["id", "email", "name", "role", "provider"]
+                missing_fields = [field for field in required_fields if field not in data]
                 
                 if missing_fields:
-                    self.log_test(f"POST /api/admin/categories (Create '{name}')", False, 
-                                f"Missing fields: {missing_fields}")
+                    self.log_test("POST /api/auth/login", False, 
+                                f"Missing UserPublic fields: {missing_fields}")
                     return False, None
                 
-                # Verify slug generation (basic check - slug should be lowercase and use dashes)
-                if not category["slug"] or ' ' in category["slug"]:
-                    self.log_test(f"POST /api/admin/categories (Create '{name}')", False, 
-                                f"Invalid slug format: {category['slug']}")
+                # Verify field values
+                if data["email"] != self.test_user_email:
+                    self.log_test("POST /api/auth/login", False, 
+                                f"Email mismatch. Expected: {self.test_user_email}, Got: {data['email']}")
                     return False, None
                 
-                self.log_test(f"POST /api/admin/categories (Create '{name}')", True, 
-                            f"Created category with ID: {category['id']}, Slug: {category['slug']}")
-                return True, category
+                # Verify session_token cookie is set
+                cookies = response.cookies
+                if 'session_token' not in cookies:
+                    self.log_test("POST /api/auth/login", False, 
+                                "session_token cookie not set")
+                    return False, None
+                
+                self.session_token = cookies['session_token']
+                
+                self.log_test("POST /api/auth/login", True, 
+                            f"✅ Login successful. UserPublic returned directly (not nested). Cookie updated.")
+                return True, data
             else:
-                self.log_test(f"POST /api/admin/categories (Create '{name}')", False, 
+                self.log_test("POST /api/auth/login", False, 
                             f"Status: {response.status_code}, Response: {response.text}")
                 return False, None
                 
         except Exception as e:
-            self.log_test(f"POST /api/admin/categories (Create '{name}')", False, f"Exception: {str(e)}")
+            self.log_test("POST /api/auth/login", False, f"Exception: {str(e)}")
             return False, None
     
     def test_update_category(self, category_id, new_name, new_description=None):
