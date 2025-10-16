@@ -195,15 +195,18 @@ backend:
 
   - task: "Comentarios mejorados para usuarios autenticados"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Actualizado modelo Comment para incluir user_id. Nuevos endpoints: POST /comments (autenticado), PUT /comments/{comment_id}, DELETE /comments/{comment_id}. Los comentarios de usuarios autenticados se aprueban automáticamente."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY - Enhanced comments system working perfectly. Fixed endpoint conflict by moving anonymous comments to /comments/anonymous. Tested: POST /api/comments creates authenticated comment with auto-approval, PUT /api/comments/{id} updates own comment with updated_at timestamp, DELETE /api/comments/{id} deletes own comment, authorization checks prevent editing others' comments (404 error), GET /api/posts/{id}/comments shows only approved comments. All functionality verified."
 
   - task: "Sistema de perfil de usuario y actividad"
     implemented: true
