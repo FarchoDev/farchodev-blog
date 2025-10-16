@@ -106,10 +106,12 @@ const AdminCategories = () => {
           </button>
         </div>
 
-        {/* Create Form */}
+        {/* Create/Edit Form */}
         {showForm && (
           <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="category-form">
-            <h2 className="text-xl font-bold text-gray-900 mb-4" style={{fontFamily: 'Space Grotesk'}}>Crear Nueva Categoría</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4" style={{fontFamily: 'Space Grotesk'}}>
+              {editingCategory ? 'Editar Categoría' : 'Crear Nueva Categoría'}
+            </h2>
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
@@ -137,14 +139,14 @@ const AdminCategories = () => {
                 <div className="flex justify-end space-x-3">
                   <button 
                     type="button" 
-                    onClick={() => setShowForm(false)} 
+                    onClick={handleCancel} 
                     className="btn-secondary"
                     data-testid="cancel-category-btn"
                   >
                     Cancelar
                   </button>
                   <button type="submit" className="btn-primary" data-testid="save-category-btn">
-                    Crear Categoría
+                    {editingCategory ? 'Actualizar Categoría' : 'Crear Categoría'}
                   </button>
                 </div>
               </div>
