@@ -27,6 +27,7 @@ function App() {
             <Route path="/post/:slug" element={<PostDetail />} />
             <Route path="/category/:category" element={<Category />} />
             <Route path="/about" element={<About />} />
+            <Route path="/profile" element={<UserProfile />} />
             
             {/* Admin Routes - Protected */}
             <Route 
