@@ -159,24 +159,99 @@ const PostDetail = () => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     
-    if (!commentForm.author_name || !commentForm.author_email || !commentForm.content) {
-      toast.error('Por favor completa todos los campos');
+    if (isAuthenticated) {
+      // Authenticated user comment
+      if (!commentForm.content) {
+        toast.error('Por favor escribe un comentario');
+        return;
+      }
+
+      setSubmittingComment(true);
+      try {
+        const response = await axios.post(`${API}/comments`, 
+          {
+            content: commentForm.content,
+            post_id: post.id
+          },
+          { withCredentials: true }
+        );
+        
+        // Add new comment to list immediately (auto-approved)
+        setComments([response.data, ...comments]);
+        toast.success('Comentario publicado');
+        setCommentForm({ author_name: '', author_email: '', content: '' });
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+        toast.error('Error al enviar el comentario');
+      } finally {
+        setSubmittingComment(false);
+      }
+    } else {
+      // Anonymous comment (requires approval)
+      if (!commentForm.author_name || !commentForm.author_email || !commentForm.content) {
+        toast.error('Por favor completa todos los campos');
+        return;
+      }
+
+      setSubmittingComment(true);
+      try {
+        await axios.post(`${API}/comments/anonymous`, {
+          ...commentForm,
+          post_id: post.id
+        });
+        toast.success('Comentario enviado. Estará visible después de la aprobación.');
+        setCommentForm({ author_name: '', author_email: '', content: '' });
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+        toast.error('Error al enviar el comentario');
+      } finally {
+        setSubmittingComment(false);
+      }
+    }
+  };
+
+  const handleEditComment = async (commentId) => {
+    if (!editCommentContent.trim()) {
+      toast.error('El comentario no puede estar vacío');
       return;
     }
 
-    setSubmittingComment(true);
     try {
-      await axios.post(`${API}/comments`, {
-        ...commentForm,
-        post_id: post.id
-      });
-      toast.success('Comentario enviado. Estará visible después de la aprobación.');
-      setCommentForm({ author_name: '', author_email: '', content: '' });
+      const response = await axios.put(`${API}/comments/${commentId}`, 
+        { content: editCommentContent },
+        { withCredentials: true }
+      );
+      
+      // Update comment in list
+      setComments(comments.map(c => 
+        c.id === commentId ? response.data : c
+      ));
+      
+      setEditingCommentId(null);
+      setEditCommentContent('');
+      toast.success('Comentario actualizado');
     } catch (error) {
-      console.error('Error submitting comment:', error);
-      toast.error('Error al enviar el comentario');
-    } finally {
-      setSubmittingComment(false);
+      console.error('Error updating comment:', error);
+      toast.error('Error al actualizar comentario');
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    if (!window.confirm('¿Estás seguro de eliminar este comentario?')) {
+      return;
+    }
+
+    try {
+      await axios.delete(`${API}/comments/${commentId}`, {
+        withCredentials: true
+      });
+      
+      // Remove comment from list
+      setComments(comments.filter(c => c.id !== commentId));
+      toast.success('Comentario eliminado');
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      toast.error('Error al eliminar comentario');
     }
   };
 
