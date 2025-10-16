@@ -210,15 +210,18 @@ backend:
 
   - task: "Sistema de perfil de usuario y actividad"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/auth.py, /app/backend/features.py, /app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Endpoints implementados: GET /users/profile, PUT /users/profile, GET /users/activity. UserProfile con bio y social links. UserActivity muestra estadísticas de likes, bookmarks y comentarios."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY - User profile system working perfectly. Tested: GET /api/users/profile retrieves user profile (creates if doesn't exist), PUT /api/users/profile updates profile with bio and social links, GET /api/users/activity returns activity summary with total counts and recent items for comments/likes/bookmarks. All profile functionality verified with proper authentication requirements."
   
   - task: "Endpoint PUT para actualizar categorías"
     implemented: true
