@@ -293,20 +293,27 @@ async def create_or_update_user(db, email: str, name: str, picture: Optional[str
         if picture and existing_user.get("picture") != picture:
             update_data["picture"] = picture
         
+        # Update role if email is in admin list (in case it was added later)
+        correct_role = get_user_role(email)
+        if existing_user.get("role") != correct_role:
+            update_data["role"] = correct_role
+        
         await db.users.update_one(
             {"email": email},
             {"$set": update_data}
         )
+        # Refresh user data to include updated role
+        existing_user = await db.users.find_one({"email": email})
         return User(**existing_user)
     
-    # Create new user
+    # Create new user with automatic role assignment
     user = User(
         email=email,
         name=name,
         picture=picture,
         provider=provider,
         password_hash=password_hash,
-        role="user"  # Default role
+        role=get_user_role(email)  # Automatic role based on email
     )
     
     user_doc = user.model_dump()
