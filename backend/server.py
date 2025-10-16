@@ -721,10 +721,15 @@ async def get_user_activity(request: Request):
         recent_bookmarks=recent_bookmarks
     )
 
-# Admin Routes
+# ============================================================================
+# ADMIN ROUTES (Protected - Admin only)
+# ============================================================================
+
 @api_router.get("/admin/posts", response_model=List[Post])
-async def get_all_posts_admin():
+async def get_all_posts_admin(request: Request):
     """Get all posts including drafts (admin)"""
+    await require_admin(request, db)
+    
     posts = await db.posts.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     
     for post in posts:
@@ -735,8 +740,10 @@ async def get_all_posts_admin():
     return posts
 
 @api_router.post("/admin/posts", response_model=Post)
-async def create_post(post_data: PostCreate):
+async def create_post(post_data: PostCreate, request: Request):
     """Create a new post (admin)"""
+    await require_admin(request, db)
+    
     slug = create_slug(post_data.title)
     reading_time = calculate_reading_time(post_data.content)
     
@@ -759,8 +766,10 @@ async def create_post(post_data: PostCreate):
     return post_obj
 
 @api_router.put("/admin/posts/{post_id}", response_model=Post)
-async def update_post(post_id: str, post_data: PostUpdate):
+async def update_post(post_id: str, post_data: PostUpdate, request: Request):
     """Update a post (admin)"""
+    await require_admin(request, db)
+    
     existing_post = await db.posts.find_one({"id": post_id})
     
     if not existing_post:
@@ -789,8 +798,10 @@ async def update_post(post_id: str, post_data: PostUpdate):
     return Post(**updated_post)
 
 @api_router.delete("/admin/posts/{post_id}")
-async def delete_post(post_id: str):
+async def delete_post(post_id: str, request: Request):
     """Delete a post (admin)"""
+    await require_admin(request, db)
+    
     result = await db.posts.delete_one({"id": post_id})
     
     if result.deleted_count == 0:
@@ -799,8 +810,10 @@ async def delete_post(post_id: str):
     return {"message": "Post deleted successfully"}
 
 @api_router.post("/admin/categories", response_model=Category)
-async def create_category(category_data: CategoryCreate):
+async def create_category(category_data: CategoryCreate, request: Request):
     """Create a new category (admin)"""
+    await require_admin(request, db)
+    
     slug = create_slug(category_data.name)
     category_obj = Category(slug=slug, **category_data.model_dump())
     
@@ -811,8 +824,10 @@ async def create_category(category_data: CategoryCreate):
     return category_obj
 
 @api_router.put("/admin/categories/{category_id}", response_model=Category)
-async def update_category(category_id: str, category_data: CategoryCreate):
+async def update_category(category_id: str, category_data: CategoryCreate, request: Request):
     """Update a category (admin)"""
+    await require_admin(request, db)
+    
     existing_category = await db.categories.find_one({"id": category_id})
     
     if not existing_category:
@@ -835,8 +850,10 @@ async def update_category(category_id: str, category_data: CategoryCreate):
     return Category(**updated_category)
 
 @api_router.delete("/admin/categories/{category_id}")
-async def delete_category(category_id: str):
+async def delete_category(category_id: str, request: Request):
     """Delete a category (admin)"""
+    await require_admin(request, db)
+    
     result = await db.categories.delete_one({"id": category_id})
     
     if result.deleted_count == 0:
@@ -845,8 +862,10 @@ async def delete_category(category_id: str):
     return {"message": "Category deleted successfully"}
 
 @api_router.get("/admin/comments", response_model=List[Comment])
-async def get_all_comments_admin():
+async def get_all_comments_admin(request: Request):
     """Get all comments including pending (admin)"""
+    await require_admin(request, db)
+    
     comments = await db.comments.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     
     for comment in comments:
@@ -856,8 +875,10 @@ async def get_all_comments_admin():
     return comments
 
 @api_router.put("/admin/comments/{comment_id}/approve")
-async def approve_comment(comment_id: str):
+async def approve_comment(comment_id: str, request: Request):
     """Approve a comment (admin)"""
+    await require_admin(request, db)
+    
     result = await db.comments.update_one(
         {"id": comment_id},
         {"$set": {"approved": True}}
@@ -869,8 +890,10 @@ async def approve_comment(comment_id: str):
     return {"message": "Comment approved"}
 
 @api_router.delete("/admin/comments/{comment_id}")
-async def delete_comment(comment_id: str):
+async def delete_comment_admin(comment_id: str, request: Request):
     """Delete a comment (admin)"""
+    await require_admin(request, db)
+    
     result = await db.comments.delete_one({"id": comment_id})
     
     if result.deleted_count == 0:
@@ -879,13 +902,16 @@ async def delete_comment(comment_id: str):
     return {"message": "Comment deleted successfully"}
 
 @api_router.get("/admin/stats")
-async def get_stats():
+async def get_stats(request: Request):
     """Get blog statistics (admin)"""
+    await require_admin(request, db)
+    
     total_posts = await db.posts.count_documents({})
     published_posts = await db.posts.count_documents({"published": True})
     total_comments = await db.comments.count_documents({})
     pending_comments = await db.comments.count_documents({"approved": False})
     total_subscribers = await db.newsletter.count_documents({"active": True})
+    total_users = await db.users.count_documents({})
     
     # Get total views
     pipeline = [
@@ -902,6 +928,7 @@ async def get_stats():
         "pending_comments": pending_comments,
         "approved_comments": total_comments - pending_comments,
         "total_subscribers": total_subscribers,
+        "total_users": total_users,
         "total_views": total_views
     }
 
