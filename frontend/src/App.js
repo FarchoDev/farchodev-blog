@@ -14,6 +14,7 @@ import AdminPostEditor from './pages/admin/PostEditor';
 import AdminCategories from './pages/admin/Categories';
 import AdminComments from './pages/admin/Comments';
 import AdminNewsletter from './pages/admin/Newsletter';
+import UserProfile from './pages/UserProfile';
 
 function App() {
   return (
