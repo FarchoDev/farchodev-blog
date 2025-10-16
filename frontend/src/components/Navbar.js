@@ -87,13 +87,87 @@ const Navbar = () => {
             >
               Acerca de
             </Link>
-            <Link 
-              to="/admin" 
-              className="btn-primary text-sm" 
-              data-testid="nav-admin"
-            >
-              Admin
-            </Link>
+            
+            {/* Auth Section */}
+            {isAuthenticated ? (
+              <>
+                {isAdmin && (
+                  <Link 
+                    to="/admin" 
+                    className="text-sm font-medium text-gray-600 hover:text-teal-700 transition-colors" 
+                    data-testid="nav-admin"
+                  >
+                    Admin
+                  </Link>
+                )}
+                
+                {/* User Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center space-x-2 focus:outline-none"
+                    data-testid="user-menu-button"
+                  >
+                    <div className="w-9 h-9 bg-gradient-to-br from-teal-700 to-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                      {getInitials(user?.name)}
+                    </div>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-200 z-50">
+                      <div className="px-4 py-2 border-b border-gray-200">
+                        <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+                        <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                      </div>
+                      
+                      <Link
+                        to="/profile"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <User size={16} className="mr-2" />
+                        Mi Perfil
+                      </Link>
+                      
+                      <Link
+                        to="/profile?tab=bookmarks"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <BookMarked size={16} className="mr-2" />
+                        Guardados
+                      </Link>
+                      
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                      >
+                        <LogOut size={16} className="mr-2" />
+                        Cerrar Sesión
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => setShowLoginModal(true)}
+                  className="text-sm font-medium text-gray-600 hover:text-teal-700 transition-colors"
+                  data-testid="nav-login"
+                >
+                  Iniciar Sesión
+                </button>
+                <button
+                  onClick={() => setShowRegisterModal(true)}
+                  className="btn-primary text-sm"
+                  data-testid="nav-register"
+                >
+                  Registrarse
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
