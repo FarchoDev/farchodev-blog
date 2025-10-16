@@ -32,7 +32,10 @@ print(f"🔗 Testing API at: {API_BASE}")
 class AuthTester:
     def __init__(self):
         self.session = requests.Session()
-        self.created_categories = []  # Track created categories for cleanup
+        self.test_user_email = f"testuser_{uuid.uuid4().hex[:8]}@farchodev.com"
+        self.test_user_password = "securepassword123"
+        self.test_user_name = "Test User FarchoDev"
+        self.session_token = None
         
     def log_test(self, test_name, success, details=""):
         status = "✅" if success else "❌"
@@ -40,21 +43,69 @@ class AuthTester:
         if details:
             print(f"   {details}")
         
-    def test_get_categories(self):
-        """Test GET /api/categories - Get all categories"""
+    def test_user_registration(self):
+        """Test POST /api/auth/register - Critical: Response structure verification"""
         try:
-            response = self.session.get(f"{API_BASE}/categories")
+            payload = {
+                "email": self.test_user_email,
+                "password": self.test_user_password,
+                "name": self.test_user_name
+            }
+            
+            response = self.session.post(
+                f"{API_BASE}/auth/register",
+                json=payload,
+                headers={"Content-Type": "application/json"}
+            )
             
             if response.status_code == 200:
-                categories = response.json()
-                self.log_test("GET /api/categories", True, f"Retrieved {len(categories)} categories")
-                return True, categories
+                data = response.json()
+                
+                # CRITICAL: Verify response structure - should be UserPublic directly, NOT nested in 'user'
+                if "user" in data:
+                    self.log_test("POST /api/auth/register", False, 
+                                f"❌ CRITICAL: Response has nested 'user' field. Frontend expects direct UserPublic object!")
+                    return False, None
+                
+                # Verify required UserPublic fields are present directly in response
+                required_fields = ["id", "email", "name", "role", "provider"]
+                missing_fields = [field for field in required_fields if field not in data]
+                
+                if missing_fields:
+                    self.log_test("POST /api/auth/register", False, 
+                                f"Missing UserPublic fields: {missing_fields}")
+                    return False, None
+                
+                # Verify field values
+                if data["email"] != self.test_user_email:
+                    self.log_test("POST /api/auth/register", False, 
+                                f"Email mismatch. Expected: {self.test_user_email}, Got: {data['email']}")
+                    return False, None
+                
+                if data["name"] != self.test_user_name:
+                    self.log_test("POST /api/auth/register", False, 
+                                f"Name mismatch. Expected: {self.test_user_name}, Got: {data['name']}")
+                    return False, None
+                
+                # Verify session_token cookie is set
+                cookies = response.cookies
+                if 'session_token' not in cookies:
+                    self.log_test("POST /api/auth/register", False, 
+                                "session_token cookie not set")
+                    return False, None
+                
+                self.session_token = cookies['session_token']
+                
+                self.log_test("POST /api/auth/register", True, 
+                            f"✅ User registered successfully. UserPublic returned directly (not nested). Cookie set.")
+                return True, data
             else:
-                self.log_test("GET /api/categories", False, f"Status: {response.status_code}, Response: {response.text}")
+                self.log_test("POST /api/auth/register", False, 
+                            f"Status: {response.status_code}, Response: {response.text}")
                 return False, None
                 
         except Exception as e:
-            self.log_test("GET /api/categories", False, f"Exception: {str(e)}")
+            self.log_test("POST /api/auth/register", False, f"Exception: {str(e)}")
             return False, None
     
     def test_create_category(self, name, description=None):
