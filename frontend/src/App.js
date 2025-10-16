@@ -1,6 +1,8 @@
 import React from 'react';
 import '@/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import PostDetail from './pages/PostDetail';
@@ -17,22 +19,73 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/post/:slug" element={<PostDetail />} />
-          <Route path="/category/:category" element={<Category />} />
-          <Route path="/about" element={<About />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/posts" element={<AdminPosts />} />
-          <Route path="/admin/posts/new" element={<AdminPostEditor />} />
-          <Route path="/admin/posts/edit/:id" element={<AdminPostEditor />} />
-          <Route path="/admin/categories" element={<AdminCategories />} />
-          <Route path="/admin/comments" element={<AdminComments />} />
-          <Route path="/admin/newsletter" element={<AdminNewsletter />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/post/:slug" element={<PostDetail />} />
+            <Route path="/category/:category" element={<Category />} />
+            <Route path="/about" element={<About />} />
+            
+            {/* Admin Routes - Protected */}
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/posts" 
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminPosts />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/posts/new" 
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminPostEditor />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/posts/edit/:id" 
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminPostEditor />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/categories" 
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminCategories />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/comments" 
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminComments />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/newsletter" 
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminNewsletter />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );
