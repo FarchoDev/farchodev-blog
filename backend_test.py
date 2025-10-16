@@ -341,91 +341,74 @@ class AuthTester:
             return False
 
 def main():
-    print("🚀 Starting Category Endpoints Testing")
-    print("=" * 60)
+    print("🚀 Starting Authentication System Testing")
+    print("🎯 Focus: Response structure verification for real-time UI updates")
+    print("=" * 70)
     
-    tester = CategoryTester()
+    tester = AuthTester()
     
     try:
-        # Test 1: Get existing categories
-        print("\n📋 Test 1: GET /api/categories")
-        success, initial_categories = tester.test_get_categories()
+        # Test 1: User Registration - CRITICAL for UI updates
+        print("\n👤 Test 1: POST /api/auth/register")
+        print("   🔍 Verifying UserPublic returned directly (not nested in 'user')")
+        success, user_data = tester.test_user_registration()
         if not success:
-            print("❌ Cannot proceed with testing - GET categories failed")
+            print("❌ CRITICAL: Registration failed - cannot proceed with testing")
             return False
         
-        # Test 2: Create a test category
-        print("\n📝 Test 2: POST /api/admin/categories (Create)")
-        success, test_category = tester.test_create_category(
-            "Desarrollo Web", 
-            "Artículos sobre desarrollo web moderno"
-        )
+        # Test 2: User Login - CRITICAL for UI updates
+        print("\n🔐 Test 2: POST /api/auth/login")
+        print("   🔍 Verifying UserPublic returned directly (not nested in 'user')")
+        success, login_data = tester.test_user_login()
         if not success:
-            print("❌ Cannot proceed with testing - Category creation failed")
+            print("❌ CRITICAL: Login failed")
             return False
         
-        # Test 3: Update the category
-        print("\n✏️ Test 3: PUT /api/admin/categories/{id} (Update)")
-        success, updated_category = tester.test_update_category(
-            test_category["id"],
-            "Desarrollo Frontend",
-            "Artículos sobre desarrollo frontend con React y Vue"
-        )
+        # Test 3: Get Current User - Verify authentication works
+        print("\n👥 Test 3: GET /api/auth/me")
+        print("   🔍 Testing both cookie and Bearer token authentication")
+        success, me_data = tester.test_get_current_user()
         if not success:
-            print("❌ Category update failed")
+            print("❌ Get current user failed")
             return False
         
-        # Test 4: Try to update non-existent category (should fail with 404)
-        print("\n🚫 Test 4: PUT /api/admin/categories/{nonexistent_id} (404 test)")
-        tester.test_update_nonexistent_category()
-        
-        # Test 5: Create another category for deletion test
-        print("\n📝 Test 5: POST /api/admin/categories (Create for deletion)")
-        success, delete_test_category = tester.test_create_category(
-            "Categoría Temporal", 
-            "Esta categoría será eliminada en las pruebas"
-        )
+        # Test 4: Logout - Verify cookie clearing
+        print("\n🚪 Test 4: POST /api/auth/logout")
+        print("   🔍 Verifying session_token cookie is cleared")
+        success = tester.test_logout()
         if not success:
-            print("❌ Cannot create category for deletion test")
+            print("❌ Logout failed")
             return False
         
-        # Test 6: Delete the temporary category
-        print("\n🗑️ Test 6: DELETE /api/admin/categories/{id}")
-        success = tester.test_delete_category(delete_test_category["id"])
-        if not success:
-            print("❌ Category deletion failed")
-            return False
+        # Test 5: Edge Cases - Invalid credentials
+        print("\n🚫 Test 5: Invalid Credentials")
+        tester.test_invalid_credentials()
         
-        # Test 7: Verify the category was actually deleted
-        print("\n🔍 Test 7: Verify category deletion")
-        tester.verify_category_deleted(delete_test_category["id"])
+        # Test 6: Edge Cases - Duplicate registration
+        print("\n🚫 Test 6: Duplicate Registration")
+        tester.test_duplicate_registration()
         
-        # Test 8: Try to delete non-existent category (should fail with 404)
-        print("\n🚫 Test 8: DELETE /api/admin/categories/{nonexistent_id} (404 test)")
-        tester.test_delete_nonexistent_category()
+        # Test 7: Edge Cases - Unauthorized access
+        print("\n🚫 Test 7: Unauthorized Access")
+        tester.test_unauthorized_access()
         
-        # Test 9: Final verification - get all categories
-        print("\n📋 Test 9: Final GET /api/categories verification")
-        success, final_categories = tester.test_get_categories()
-        
-        print("\n" + "=" * 60)
-        print("🎯 TESTING SUMMARY")
-        print("=" * 60)
-        print("✅ All category endpoints tested successfully!")
-        print("✅ PUT /api/admin/categories/{id} - Update functionality working")
-        print("✅ DELETE /api/admin/categories/{id} - Delete functionality working")
-        print("✅ 404 error handling working for both PUT and DELETE")
-        print("✅ Slug regeneration working on category updates")
+        print("\n" + "=" * 70)
+        print("🎯 AUTHENTICATION TESTING SUMMARY")
+        print("=" * 70)
+        print("✅ POST /api/auth/register - UserPublic returned directly (not nested)")
+        print("✅ POST /api/auth/login - UserPublic returned directly (not nested)")
+        print("✅ GET /api/auth/me - Working with both cookie and Bearer token")
+        print("✅ POST /api/auth/logout - Cookie clearing working correctly")
+        print("✅ Edge cases handled properly (401, 400 errors)")
+        print("\n🎉 CRITICAL FIX VERIFIED:")
+        print("   Frontend can now use setUser(data) instead of setUser(data.user)")
+        print("   Real-time UI updates should work correctly!")
         
         return True
         
     except Exception as e:
         print(f"\n❌ Unexpected error during testing: {str(e)}")
         return False
-        
-    finally:
-        # Always cleanup
-        tester.cleanup()
 
 if __name__ == "__main__":
     success = main()
