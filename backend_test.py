@@ -264,34 +264,31 @@ class AuthTester:
             self.log_test("POST /api/auth/logout", False, f"Exception: {str(e)}")
             return False
     
-    def test_delete_category(self, category_id):
-        """Test DELETE /api/admin/categories/{category_id} - Delete category"""
+    def test_invalid_credentials(self):
+        """Test login with invalid credentials"""
         try:
-            response = self.session.delete(f"{API_BASE}/admin/categories/{category_id}")
+            payload = {
+                "email": self.test_user_email,
+                "password": "wrongpassword"
+            }
             
-            if response.status_code == 200:
-                result = response.json()
-                
-                if "message" in result and "deleted" in result["message"].lower():
-                    self.log_test(f"DELETE /api/admin/categories/{category_id}", True, 
-                                f"Category deleted successfully: {result['message']}")
-                    
-                    # Remove from our tracking list
-                    if category_id in self.created_categories:
-                        self.created_categories.remove(category_id)
-                    
-                    return True
-                else:
-                    self.log_test(f"DELETE /api/admin/categories/{category_id}", False, 
-                                f"Unexpected response format: {result}")
-                    return False
+            response = requests.post(
+                f"{API_BASE}/auth/login",
+                json=payload,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 401:
+                self.log_test("POST /api/auth/login (invalid credentials)", True, 
+                            "✅ Correctly rejected invalid credentials with 401")
+                return True
             else:
-                self.log_test(f"DELETE /api/admin/categories/{category_id}", False, 
-                            f"Status: {response.status_code}, Response: {response.text}")
+                self.log_test("POST /api/auth/login (invalid credentials)", False, 
+                            f"Expected 401, got {response.status_code}")
                 return False
                 
         except Exception as e:
-            self.log_test(f"DELETE /api/admin/categories/{category_id}", False, f"Exception: {str(e)}")
+            self.log_test("POST /api/auth/login (invalid credentials)", False, f"Exception: {str(e)}")
             return False
     
     def test_delete_nonexistent_category(self):
