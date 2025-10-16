@@ -167,44 +167,58 @@ class AuthTester:
             self.log_test("POST /api/auth/login", False, f"Exception: {str(e)}")
             return False, None
     
-    def test_update_category(self, category_id, new_name, new_description=None):
-        """Test PUT /api/admin/categories/{category_id} - Update category"""
+    def test_get_current_user(self):
+        """Test GET /api/auth/me - Verify authenticated user data"""
         try:
-            payload = {"name": new_name}
-            if new_description:
-                payload["description"] = new_description
-                
-            response = self.session.put(
-                f"{API_BASE}/admin/categories/{category_id}",
-                json=payload,
-                headers={"Content-Type": "application/json"}
-            )
+            # Test with cookie authentication
+            response = self.session.get(f"{API_BASE}/auth/me")
             
             if response.status_code == 200:
-                updated_category = response.json()
+                data = response.json()
                 
-                # Verify the update worked
-                if updated_category["name"] != new_name:
-                    self.log_test(f"PUT /api/admin/categories/{category_id}", False, 
-                                f"Name not updated. Expected: {new_name}, Got: {updated_category['name']}")
+                # Verify required UserPublic fields
+                required_fields = ["id", "email", "name", "role", "provider"]
+                missing_fields = [field for field in required_fields if field not in data]
+                
+                if missing_fields:
+                    self.log_test("GET /api/auth/me (cookie)", False, 
+                                f"Missing UserPublic fields: {missing_fields}")
                     return False, None
                 
-                # Verify slug was regenerated (basic check - should be different from original and valid)
-                if not updated_category["slug"] or ' ' in updated_category["slug"]:
-                    self.log_test(f"PUT /api/admin/categories/{category_id}", False, 
-                                f"Invalid updated slug format: {updated_category['slug']}")
+                # Verify it's the same user
+                if data["email"] != self.test_user_email:
+                    self.log_test("GET /api/auth/me (cookie)", False, 
+                                f"Email mismatch. Expected: {self.test_user_email}, Got: {data['email']}")
                     return False, None
                 
-                self.log_test(f"PUT /api/admin/categories/{category_id}", True, 
-                            f"Updated category name to '{new_name}', slug to '{updated_category['slug']}'")
-                return True, updated_category
+                self.log_test("GET /api/auth/me (cookie)", True, 
+                            f"✅ Current user retrieved successfully via cookie")
+                
+                # Test with Bearer token authentication
+                if self.session_token:
+                    headers = {"Authorization": f"Bearer {self.session_token}"}
+                    response_bearer = requests.get(f"{API_BASE}/auth/me", headers=headers)
+                    
+                    if response_bearer.status_code == 200:
+                        bearer_data = response_bearer.json()
+                        if bearer_data["email"] == self.test_user_email:
+                            self.log_test("GET /api/auth/me (Bearer)", True, 
+                                        f"✅ Current user retrieved successfully via Bearer token")
+                        else:
+                            self.log_test("GET /api/auth/me (Bearer)", False, 
+                                        f"Bearer token returned different user")
+                    else:
+                        self.log_test("GET /api/auth/me (Bearer)", False, 
+                                    f"Bearer auth failed: {response_bearer.status_code}")
+                
+                return True, data
             else:
-                self.log_test(f"PUT /api/admin/categories/{category_id}", False, 
+                self.log_test("GET /api/auth/me", False, 
                             f"Status: {response.status_code}, Response: {response.text}")
                 return False, None
                 
         except Exception as e:
-            self.log_test(f"PUT /api/admin/categories/{category_id}", False, f"Exception: {str(e)}")
+            self.log_test("GET /api/auth/me", False, f"Exception: {str(e)}")
             return False, None
     
     def test_update_nonexistent_category(self):
