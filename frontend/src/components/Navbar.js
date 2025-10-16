@@ -183,22 +183,87 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-3" data-testid="mobile-menu">
-            <Link to="/" className="block text-gray-600 hover:text-teal-700" data-testid="mobile-nav-home">
+            <Link 
+              to="/" 
+              className="block text-gray-600 hover:text-teal-700" 
+              onClick={() => setIsMenuOpen(false)}
+              data-testid="mobile-nav-home"
+            >
               Inicio
             </Link>
-            <Link to="/blog" className="block text-gray-600 hover:text-teal-700" data-testid="mobile-nav-blog">
+            <Link 
+              to="/blog" 
+              className="block text-gray-600 hover:text-teal-700" 
+              onClick={() => setIsMenuOpen(false)}
+              data-testid="mobile-nav-blog"
+            >
               Blog
             </Link>
-            <Link to="/about" className="block text-gray-600 hover:text-teal-700" data-testid="mobile-nav-about">
+            <Link 
+              to="/about" 
+              className="block text-gray-600 hover:text-teal-700" 
+              onClick={() => setIsMenuOpen(false)}
+              data-testid="mobile-nav-about"
+            >
               Acerca de
             </Link>
-            <Link to="/admin" className="block text-teal-700 font-medium" data-testid="mobile-nav-admin">
-              Admin
-            </Link>
+            
+            {isAuthenticated ? (
+              <>
+                {isAdmin && (
+                  <Link 
+                    to="/admin" 
+                    className="block text-gray-600 hover:text-teal-700" 
+                    onClick={() => setIsMenuOpen(false)}
+                    data-testid="mobile-nav-admin"
+                  >
+                    Admin
+                  </Link>
+                )}
+                <Link 
+                  to="/profile" 
+                  className="block text-gray-600 hover:text-teal-700" 
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Mi Perfil
+                </Link>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="block w-full text-left text-red-600 hover:text-red-700"
+                >
+                  Cerrar Sesión
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setShowLoginModal(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="block w-full text-left text-gray-600 hover:text-teal-700"
+                >
+                  Iniciar Sesión
+                </button>
+                <button
+                  onClick={() => {
+                    setShowRegisterModal(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="block w-full text-left text-teal-700 font-medium"
+                >
+                  Registrarse
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>
     </nav>
+    </>
   );
 };
 
