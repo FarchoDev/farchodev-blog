@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Backend API Testing for FarchoDev Blog - Category Endpoints
-Tests all category-related endpoints including the new PUT and DELETE operations
+Backend API Testing for FarchoDev Blog - Authentication System
+Tests authentication endpoints focusing on response structure and real-time UI updates
 """
 
 import requests
 import json
 import sys
 from datetime import datetime
+import uuid
 
 # Get backend URL from frontend .env
 def get_backend_url():
@@ -28,7 +29,7 @@ if not BASE_URL:
 API_BASE = f"{BASE_URL}/api"
 print(f"🔗 Testing API at: {API_BASE}")
 
-class CategoryTester:
+class AuthTester:
     def __init__(self):
         self.session = requests.Session()
         self.created_categories = []  # Track created categories for cleanup
