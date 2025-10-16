@@ -385,16 +385,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Sistema de autenticación JWT local"
-    - "Google OAuth (Emergent Auth)"
-    - "GitHub OAuth"
-    - "Protección de rutas admin con middleware"
-    - "Sistema de Likes en posts"
-    - "Sistema de Bookmarks"
-    - "Comentarios mejorados para usuarios autenticados"
-    - "Sistema de perfil de usuario y actividad"
+    - "AuthContext y manejo de estado global de autenticación"
+    - "Modal de Login con tabs (Local, Google, GitHub)"
+    - "Modal de Registro"
+    - "Actualizar Navbar con UI de autenticación"
+    - "Componente ProtectedRoute para admin"
   stuck_tasks: []
-  test_all: true
+  test_all: false
   test_priority: "high_first"
 
 agent_communication:
