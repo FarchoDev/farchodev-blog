@@ -110,27 +110,33 @@ user_problem_statement: |
 backend:
   - task: "Endpoint PUT para actualizar categorías"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implementado endpoint PUT /admin/categories/{category_id} para actualizar categorías existentes"
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY - PUT /api/admin/categories/{id} working correctly. Tested: category update with name/description changes, slug regeneration, 404 handling for non-existent IDs. All functionality verified."
   
   - task: "Endpoint DELETE para eliminar categorías"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implementado endpoint DELETE /admin/categories/{category_id} para eliminar categorías"
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY - DELETE /api/admin/categories/{id} working correctly. Tested: category deletion, success message response, verification that deleted categories no longer appear in GET /api/categories, 404 handling for non-existent IDs. All functionality verified."
 
 frontend:
   - task: "UI para editar categorías"
