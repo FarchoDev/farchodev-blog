@@ -164,8 +164,28 @@ const AdminCategories = () => {
         ) : categories.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="categories-grid">
             {categories.map(category => (
-              <div key={category.id} className="bg-white rounded-xl border border-gray-200 p-6" data-testid={`category-${category.id}`}>
-                <h3 className="text-xl font-bold text-gray-900 mb-2" style={{fontFamily: 'Space Grotesk'}}>{category.name}</h3>
+              <div key={category.id} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow" data-testid={`category-${category.id}`}>
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-xl font-bold text-gray-900" style={{fontFamily: 'Space Grotesk'}}>{category.name}</h3>
+                  <div className="flex space-x-2">
+                    <button 
+                      onClick={() => handleEdit(category)}
+                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      title="Editar categoría"
+                      data-testid={`edit-category-${category.id}`}
+                    >
+                      <Edit2 size={18} />
+                    </button>
+                    <button 
+                      onClick={() => handleDelete(category.id, category.name)}
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      title="Eliminar categoría"
+                      data-testid={`delete-category-${category.id}`}
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                </div>
                 <p className="text-gray-600 text-sm mb-3">{category.description || 'Sin descripción'}</p>
                 <span className="inline-block px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-xs font-medium">
                   Slug: {category.slug}
