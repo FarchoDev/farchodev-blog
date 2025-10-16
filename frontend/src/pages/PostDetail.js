@@ -329,20 +329,59 @@ const PostDetail = () => {
               </span>
             </div>
 
-            {/* Share Buttons */}
-            <div className="flex items-center gap-3" data-testid="share-buttons">
-              <span className="text-sm text-gray-600 flex items-center">
-                <Share2 size={18} className="mr-2" />
-                Compartir:
-              </span>
-              <button onClick={() => sharePost('facebook')} className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" data-testid="share-facebook">
-                <Facebook size={18} />
+            {/* Share, Like & Bookmark Buttons */}
+            <div className="flex flex-wrap items-center gap-4" data-testid="action-buttons">
+              {/* Share Buttons */}
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-600 flex items-center">
+                  <Share2 size={18} className="mr-2" />
+                  Compartir:
+                </span>
+                <button onClick={() => sharePost('facebook')} className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" data-testid="share-facebook">
+                  <Facebook size={18} />
+                </button>
+                <button onClick={() => sharePost('twitter')} className="p-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors" data-testid="share-twitter">
+                  <Twitter size={18} />
+                </button>
+                <button onClick={() => sharePost('linkedin')} className="p-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors" data-testid="share-linkedin">
+                  <Linkedin size={18} />
+                </button>
+              </div>
+
+              {/* Like Button */}
+              <button 
+                onClick={handleLike}
+                disabled={likesLoading}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                  likeStats.user_liked 
+                    ? 'bg-red-100 text-red-600 hover:bg-red-200' 
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                } disabled:opacity-50`}
+                data-testid="like-button"
+              >
+                <Heart 
+                  size={20} 
+                  fill={likeStats.user_liked ? 'currentColor' : 'none'}
+                />
+                <span className="font-medium">{likeStats.total_likes}</span>
               </button>
-              <button onClick={() => sharePost('twitter')} className="p-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors" data-testid="share-twitter">
-                <Twitter size={18} />
-              </button>
-              <button onClick={() => sharePost('linkedin')} className="p-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors" data-testid="share-linkedin">
-                <Linkedin size={18} />
+
+              {/* Bookmark Button */}
+              <button 
+                onClick={handleBookmark}
+                disabled={bookmarkLoading}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                  isBookmarked 
+                    ? 'bg-teal-100 text-teal-700 hover:bg-teal-200' 
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                } disabled:opacity-50`}
+                data-testid="bookmark-button"
+              >
+                <Bookmark 
+                  size={20} 
+                  fill={isBookmarked ? 'currentColor' : 'none'}
+                />
+                <span className="font-medium">{isBookmarked ? 'Guardado' : 'Guardar'}</span>
               </button>
             </div>
           </div>
