@@ -180,15 +180,18 @@ backend:
 
   - task: "Sistema de Bookmarks"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/features.py, /app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Endpoints implementados: POST /bookmarks, DELETE /bookmarks/{post_id}, GET /bookmarks, GET /posts/{post_id}/bookmark-status. Modelo Bookmark en MongoDB."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY - Bookmarks system working perfectly. Tested: POST /api/bookmarks adds bookmark with post_id parameter, duplicate bookmark prevention (400 error), GET /api/bookmarks returns user's bookmarked posts as array, GET /api/posts/{id}/bookmark-status shows bookmark status, DELETE /api/bookmarks/{id} removes bookmark, unauthenticated requests properly rejected with 401. All bookmark functionality verified."
 
   - task: "Comentarios mejorados para usuarios autenticados"
     implemented: true
