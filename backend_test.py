@@ -291,24 +291,32 @@ class AuthTester:
             self.log_test("POST /api/auth/login (invalid credentials)", False, f"Exception: {str(e)}")
             return False
     
-    def test_delete_nonexistent_category(self):
-        """Test DELETE with non-existent category ID (should return 404)"""
+    def test_duplicate_registration(self):
+        """Test registration with existing email"""
         try:
-            fake_id = "nonexistent-category-id-67890"
+            payload = {
+                "email": self.test_user_email,  # Same email as before
+                "password": "anotherpassword",
+                "name": "Another User"
+            }
             
-            response = self.session.delete(f"{API_BASE}/admin/categories/{fake_id}")
+            response = requests.post(
+                f"{API_BASE}/auth/register",
+                json=payload,
+                headers={"Content-Type": "application/json"}
+            )
             
-            if response.status_code == 404:
-                self.log_test("DELETE /api/admin/categories/{nonexistent_id} (404 test)", True, 
-                            "Correctly returned 404 for non-existent category")
+            if response.status_code == 400:
+                self.log_test("POST /api/auth/register (duplicate email)", True, 
+                            "✅ Correctly rejected duplicate email with 400")
                 return True
             else:
-                self.log_test("DELETE /api/admin/categories/{nonexistent_id} (404 test)", False, 
-                            f"Expected 404, got {response.status_code}")
+                self.log_test("POST /api/auth/register (duplicate email)", False, 
+                            f"Expected 400, got {response.status_code}")
                 return False
                 
         except Exception as e:
-            self.log_test("DELETE /api/admin/categories/{nonexistent_id} (404 test)", False, f"Exception: {str(e)}")
+            self.log_test("POST /api/auth/register (duplicate email)", False, f"Exception: {str(e)}")
             return False
     
     def verify_category_deleted(self, category_id):
