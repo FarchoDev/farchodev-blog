@@ -38,6 +38,13 @@ const PostDetail = () => {
     fetchPost();
   }, [slug]);
 
+  useEffect(() => {
+    if (post && isAuthenticated) {
+      fetchLikeStats();
+      fetchBookmarkStatus();
+    }
+  }, [post, isAuthenticated]);
+
   const fetchPost = async () => {
     try {
       const response = await axios.get(`${API}/posts/${slug}`);
