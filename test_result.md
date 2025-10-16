@@ -258,64 +258,64 @@ backend:
 
 frontend:
   - task: "AuthContext y manejo de estado global de autenticación"
-    implemented: false
+    implemented: true
     working: "NA"
-    file: ""
+    file: "/app/frontend/src/contexts/AuthContext.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Pendiente: Crear contexto de autenticación en React para manejar estado de usuario actual"
+        comment: "✅ IMPLEMENTADO - Creado AuthContext con hooks useAuth. Funciones: register, login, logout, checkAuth. Estado: user, loading, isAuthenticated, isAdmin. Uso de cookies para session_token. Integración con backend API /api/auth/*"
 
   - task: "Modal de Login con tabs (Local, Google, GitHub)"
-    implemented: false
+    implemented: true
     working: "NA"
-    file: ""
+    file: "/app/frontend/src/components/LoginModal.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Pendiente: Crear componente LoginModal con tres tabs para diferentes métodos de autenticación"
+        comment: "✅ IMPLEMENTADO - Modal de Login con 3 tabs (Email, Google, GitHub). Tab Email completamente funcional con validación. Tabs Google y GitHub muestran mensaje 'próximamente' ya que no hay credenciales OAuth configuradas. Incluye manejo de errores y estados de carga."
 
   - task: "Modal de Registro"
-    implemented: false
+    implemented: true
     working: "NA"
-    file: ""
+    file: "/app/frontend/src/components/RegisterModal.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Pendiente: Crear componente RegisterModal para registro con email/password"
+        comment: "✅ IMPLEMENTADO - Modal de Registro con campos: nombre, email, password, confirmar password. Validaciones: mínimo 6 caracteres, contraseñas coinciden. Integración con AuthContext register(). Switch a LoginModal disponible."
 
   - task: "Actualizar Navbar con UI de autenticación"
-    implemented: false
+    implemented: true
     working: "NA"
-    file: ""
+    file: "/app/frontend/src/components/Navbar.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Pendiente: Agregar botones Login/Register y dropdown de usuario con avatar"
+        comment: "✅ IMPLEMENTADO - Navbar actualizado con lógica condicional. Usuario NO autenticado: botones 'Iniciar Sesión' y 'Registrarse'. Usuario autenticado: avatar con iniciales, dropdown con opciones (Mi Perfil, Guardados, Cerrar Sesión). Admin ve link adicional a /admin. Responsive para mobile."
 
   - task: "Componente ProtectedRoute para admin"
-    implemented: false
+    implemented: true
     working: "NA"
-    file: ""
+    file: "/app/frontend/src/components/ProtectedRoute.js, /app/frontend/src/App.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Pendiente: Crear HOC para proteger rutas admin y verificar autenticación"
+        comment: "✅ IMPLEMENTADO - Componente ProtectedRoute con prop requireAdmin. Verifica autenticación y role='admin'. Loading state con spinner. Página de acceso denegado estilizada para no-admin. Todas las rutas /admin/* protegidas en App.js con ProtectedRoute."
 
   - task: "Botones de Like y Bookmark en PostDetail"
     implemented: false
