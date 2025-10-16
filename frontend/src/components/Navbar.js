@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X } from 'lucide-react';
+import { Menu, X, User, LogOut, Settings, BookMarked } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import LoginModal from './LoginModal';
+import RegisterModal from './RegisterModal';
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
   const location = useLocation();
+  const { user, logout, isAuthenticated, isAdmin } = useAuth();
 
   const isActive = (path) => location.pathname === path;
 
