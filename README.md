@@ -286,11 +286,12 @@ app/
 
 Para información detallada, consulta:
 
-- **[📖 DOCUMENTATION.md](./DOCUMENTATION.md)** - Documentación técnica completa
+- **[📖 DOCUMENTATION_COMPLETE.md](./DOCUMENTATION_COMPLETE.md)** - 📘 Documentación técnica completa (NUEVA)
+- **[📋 CHANGELOG.md](./CHANGELOG.md)** - 📝 Resumen completo de implementaciones (NUEVO)
 - **[🔐 AUTH_GUIDE.md](./AUTH_GUIDE.md)** - Guía del sistema de autenticación
-- **[🔧 TROUBLESHOOTING.md](./TROUBLESHOOTING.md)** - Solución de problemas comunes
 - **[⚙️ ADMIN_SETUP.md](./ADMIN_SETUP.md)** - Configuración del panel admin
 - **[🏗️ ARCHITECTURE.md](./ARCHITECTURE.md)** - Arquitectura del sistema
+- **[🚀 QUICK_START_GUIDE.md](./QUICK_START_GUIDE.md)** - Guía de inicio rápido
 
 ## 🔌 API Endpoints
 
