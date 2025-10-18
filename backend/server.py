@@ -211,12 +211,12 @@ async def get_categories():
     return categories
 
 @api_router.post("/comments/anonymous", response_model=Comment)
-async def create_comment_anonymous(comment_data: CommentCreate, author_name: str, author_email: str):
+async def create_comment_anonymous(comment_data: CommentCreateAnonymous):
     """Create a new comment (anonymous users - needs approval)"""
     comment_obj = Comment(
         post_id=comment_data.post_id,
-        author_name=author_name,
-        author_email=author_email,
+        author_name=comment_data.author_name,
+        author_email=comment_data.author_email,
         content=comment_data.content,
         approved=False  # Needs approval for anonymous users
     )
