@@ -115,6 +115,12 @@ class CommentCreate(BaseModel):
     post_id: str
     content: str
 
+class CommentCreateAnonymous(BaseModel):
+    post_id: str
+    author_name: str
+    author_email: str
+    content: str
+
 class CommentUpdate(BaseModel):
     content: str
 
