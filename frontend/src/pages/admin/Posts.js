@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import AdminLayout from '../../components/AdminLayout';
 import { Link } from 'react-router-dom';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { toast } from 'sonner';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const AdminPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -18,7 +15,7 @@ const AdminPosts = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get(`${API}/admin/posts`);
+      const response = await axiosInstance.get('/admin/posts');
       setPosts(response.data);
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -32,7 +29,7 @@ const AdminPosts = () => {
     if (!window.confirm(`¿Estás seguro de eliminar "${title}"?`)) return;
 
     try {
-      await axios.delete(`${API}/admin/posts/${id}`);
+      await axiosInstance.delete(`/admin/posts/${id}`);
       toast.success('Post eliminado exitosamente');
       fetchPosts();
     } catch (error) {

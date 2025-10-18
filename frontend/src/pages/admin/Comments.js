@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import AdminLayout from '../../components/AdminLayout';
 import { Check, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { toast } from 'sonner';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const AdminComments = () => {
   const [comments, setComments] = useState([]);
@@ -20,7 +17,7 @@ const AdminComments = () => {
 
   const fetchComments = async () => {
     try {
-      const response = await axios.get(`${API}/admin/comments`);
+      const response = await axiosInstance.get('/admin/comments');
       setComments(response.data);
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -31,7 +28,7 @@ const AdminComments = () => {
 
   const approveComment = async (id) => {
     try {
-      await axios.put(`${API}/admin/comments/${id}/approve`);
+      await axiosInstance.put(`/admin/comments/${id}/approve`);
       toast.success('Comentario aprobado');
       fetchComments();
     } catch (error) {
@@ -44,7 +41,7 @@ const AdminComments = () => {
     if (!window.confirm('¿Estás seguro de eliminar este comentario?')) return;
 
     try {
-      await axios.delete(`${API}/admin/comments/${id}`);
+      await axiosInstance.delete(`/admin/comments/${id}`);
       toast.success('Comentario eliminado');
       fetchComments();
     } catch (error) {

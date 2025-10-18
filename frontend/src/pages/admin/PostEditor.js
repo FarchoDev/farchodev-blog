@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import AdminLayout from '../../components/AdminLayout';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { toast } from 'sonner';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const AdminPostEditor = () => {
   const navigate = useNavigate();
@@ -35,7 +32,7 @@ const AdminPostEditor = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${API}/categories`);
+      const response = await axiosInstance.get('/categories');
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -44,7 +41,7 @@ const AdminPostEditor = () => {
 
   const fetchPost = async () => {
     try {
-      const response = await axios.get(`${API}/admin/posts`);
+      const response = await axiosInstance.get('/admin/posts');
       const post = response.data.find(p => p.id === id);
       
       if (post) {
@@ -85,10 +82,10 @@ const AdminPostEditor = () => {
       };
 
       if (isEditMode) {
-        await axios.put(`${API}/admin/posts/${id}`, payload);
+        await axiosInstance.put(`/admin/posts/${id}`, payload);
         toast.success('Post actualizado exitosamente');
       } else {
-        await axios.post(`${API}/admin/posts`, payload);
+        await axiosInstance.post('/admin/posts', payload);
         toast.success('Post creado exitosamente');
       }
       

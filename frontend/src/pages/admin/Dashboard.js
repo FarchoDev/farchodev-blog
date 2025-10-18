@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import AdminLayout from '../../components/AdminLayout';
 import { FileText, MessageSquare, Mail, Eye, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -19,8 +16,8 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       const [statsRes, postsRes] = await Promise.all([
-        axios.get(`${API}/admin/stats`),
-        axios.get(`${API}/admin/posts`)
+        axiosInstance.get('/admin/stats'),
+        axiosInstance.get('/admin/posts')
       ]);
       setStats(statsRes.data);
       setRecentPosts(postsRes.data.slice(0, 5));

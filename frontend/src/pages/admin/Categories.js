@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios';
 import AdminLayout from '../../components/AdminLayout';
 import { Plus, Edit2, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const AdminCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -23,7 +20,7 @@ const AdminCategories = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${API}/categories`);
+      const response = await axiosInstance.get('/categories');
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -43,11 +40,11 @@ const AdminCategories = () => {
     try {
       if (editingCategory) {
         // Update existing category
-        await axios.put(`${API}/admin/categories/${editingCategory.id}`, formData);
+        await axiosInstance.put(`/admin/categories/${editingCategory.id}`, formData);
         toast.success('Categoría actualizada exitosamente');
       } else {
         // Create new category
-        await axios.post(`${API}/admin/categories`, formData);
+        await axiosInstance.post('/admin/categories', formData);
         toast.success('Categoría creada exitosamente');
       }
       
@@ -76,7 +73,7 @@ const AdminCategories = () => {
     }
 
     try {
-      await axios.delete(`${API}/admin/categories/${categoryId}`);
+      await axiosInstance.delete(`/admin/categories/${categoryId}`);
       toast.success('Categoría eliminada exitosamente');
       fetchCategories();
     } catch (error) {
