@@ -343,12 +343,21 @@ Para información detallada, consulta:
 
 ### Bookmarks
 
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| `POST` | `/api/bookmarks` | Guardar post | Sí |
-| `GET` | `/api/bookmarks` | Listar bookmarks | Sí |
-| `DELETE` | `/api/bookmarks/{post_id}` | Eliminar bookmark | Sí |
-| `GET` | `/api/posts/{id}/bookmark-status` | Verificar si está guardado | Sí |
+| Método | Endpoint | Descripción | Auth | Body/Params |
+|--------|----------|-------------|------|-------------|
+| `POST` | `/api/bookmarks` | Guardar post | Sí | `{"post_id": "id"}` |
+| `GET` | `/api/bookmarks` | Listar bookmarks | Sí | - |
+| `DELETE` | `/api/bookmarks/{post_id}` | Eliminar bookmark | Sí | - |
+| `GET` | `/api/posts/{id}/bookmark-status` | Verificar si está guardado | Sí | - |
+
+**Ejemplo de uso:**
+```bash
+# Agregar bookmark
+curl -X POST https://tu-api.com/api/bookmarks \
+  -H "Content-Type: application/json" \
+  -H "Cookie: session_token=..." \
+  -d '{"post_id": "abc123"}'
+```
 
 ### Perfil y Actividad
 
