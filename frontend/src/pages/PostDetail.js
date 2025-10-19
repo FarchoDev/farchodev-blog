@@ -42,6 +42,10 @@ const PostDetail = () => {
     if (post && isAuthenticated) {
       fetchLikeStats();
       fetchBookmarkStatus();
+    } else if (!isAuthenticated) {
+      // Reset states when not authenticated
+      setIsBookmarked(false);
+      setLikeStats({ total_likes: 0, user_liked: false });
     }
   }, [post, isAuthenticated]);
 
