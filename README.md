@@ -381,6 +381,20 @@ Ver [DOCUMENTATION.md](./DOCUMENTATION.md#api-reference) para detalles completos
 
 ## 🔧 Solución de Problemas
 
+### ✅ Problemas Conocidos Resueltos
+
+#### Error 422 en Bookmarks (Resuelto en v2.0.1)
+
+**Síntoma**: Al intentar guardar un post en bookmarks, aparece error 422: `Field required: post_id`.
+
+**Causa**: El endpoint esperaba `post_id` como query parameter en lugar de en el body.
+
+**Solución Implementada**: 
+- Actualizado endpoint para recibir `post_id` en el body como JSON
+- Formato correcto: `POST /api/bookmarks` con body `{"post_id": "id-del-post"}`
+
+---
+
 ### Error 401 en Dashboard Admin
 
 **Síntoma**: Al iniciar sesión como admin y acceder al dashboard, aparece error 401.
