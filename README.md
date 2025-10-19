@@ -487,6 +487,18 @@ Si encuentras un bug o tienes una sugerencia:
 
 ## 📝 Changelog
 
+### v2.0.1 (Octubre 2025) - Bug Fixes
+- 🐛 **Fix: Error 422 en endpoint de Bookmarks**
+  - Corregido el endpoint `POST /api/bookmarks` que esperaba `post_id` como query parameter
+  - Ahora recibe correctamente `post_id` en el body del request como JSON: `{"post_id": "id"}`
+  - Agregado modelo `BookmarkCreate` para validación
+- 🔧 **Dependencias actualizadas**
+  - Agregado `httpx` para requests HTTP asíncronos en OAuth
+  - Actualizados requirements.txt con todas las dependencias necesarias
+- 📚 **Documentación actualizada**
+  - Actualizado README con el fix reciente
+  - Clarificado uso correcto del endpoint de bookmarks
+
 ### v2.0.0 (Enero 2025)
 - ✅ **Sistema de autenticación completo**
   - JWT local con bcrypt
@@ -494,7 +506,7 @@ Si encuentras un bug o tienes una sugerencia:
   - GitHub OAuth
 - ✅ **Features interactivas**
   - Sistema de likes
-  - Bookmarks
+  - Bookmarks (con fix de API en v2.0.1)
   - Comentarios mejorados (editar/eliminar)
 - ✅ **Perfil de usuario**
   - Información personal
