@@ -134,6 +134,9 @@ class Newsletter(BaseModel):
 class NewsletterSubscribe(BaseModel):
     email: str
 
+class BookmarkCreate(BaseModel):
+    post_id: str
+
 # Public Routes
 @api_router.get("/")
 async def root():
