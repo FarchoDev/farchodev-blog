@@ -71,6 +71,16 @@ class UserProfile(BaseModel):
     preferences: dict = {}
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class UserProfileUpdate(BaseModel):
+    """Model for updating user profile - all fields optional"""
+    model_config = ConfigDict(extra="ignore")
+    bio: Optional[str] = None
+    github_url: Optional[str] = None
+    twitter_url: Optional[str] = None
+    linkedin_url: Optional[str] = None
+    website_url: Optional[str] = None
+    preferences: Optional[dict] = None
+
 class UserPublic(BaseModel):
     """Public user information"""
     id: str
