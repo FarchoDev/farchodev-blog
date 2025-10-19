@@ -690,22 +690,33 @@ async def get_user_profile(request: Request):
     
     return profile
 
-@api_router.put("/users/profile", response_model=UserProfile)
-async def update_user_profile(profile_data: UserProfile, request: Request):
-    """Update user profile"""
+@api_router.put("/users/profile")
+async def update_user_profile(profile_data: UserProfileUpdate, request: Request):
+    """Update user profile - only updates provided fields"""
     user = await get_current_user(request, db)
     
-    update_dict = profile_data.model_dump()
-    update_dict["user_id"] = user.id
+    # Build update dict only with provided fields (not None)
+    update_dict = {
+        k: v for k, v in profile_data.model_dump(exclude_unset=True).items() 
+        if v is not None
+    }
+    
+    # Always update the timestamp
     update_dict["updated_at"] = datetime.now(timezone.utc)
     
+    # Ensure user_id is set
+    update_dict["user_id"] = user.id
+    
+    # Update or create profile
     await db.user_profiles.update_one(
         {"user_id": user.id},
         {"$set": update_dict},
         upsert=True
     )
     
-    return profile_data
+    # Return updated profile
+    updated_profile = await db.user_profiles.find_one({"user_id": user.id}, {"_id": 0})
+    return updated_profile
 
 @api_router.get("/users/activity", response_model=UserActivity)
 async def get_user_activity(request: Request):
