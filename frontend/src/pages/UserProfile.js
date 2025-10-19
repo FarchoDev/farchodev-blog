@@ -359,10 +359,10 @@ const UserProfile = () => {
                             setIsEditingProfile(false);
                             setProfileForm({
                               bio: profile?.bio || '',
-                              website: profile?.social_links?.website || '',
-                              github: profile?.social_links?.github || '',
-                              linkedin: profile?.social_links?.linkedin || '',
-                              twitter: profile?.social_links?.twitter || ''
+                              website: profile?.website_url || '',
+                              github: profile?.github_url || '',
+                              linkedin: profile?.linkedin_url || '',
+                              twitter: profile?.twitter_url || ''
                             });
                           }}
                           className="flex items-center gap-2"
