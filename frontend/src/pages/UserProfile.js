@@ -68,10 +68,10 @@ const UserProfile = () => {
       setProfile(response.data);
       setProfileForm({
         bio: response.data.bio || '',
-        website: response.data.social_links?.website || '',
-        github: response.data.social_links?.github || '',
-        linkedin: response.data.social_links?.linkedin || '',
-        twitter: response.data.social_links?.twitter || ''
+        website: response.data.website_url || '',
+        github: response.data.github_url || '',
+        linkedin: response.data.linkedin_url || '',
+        twitter: response.data.twitter_url || ''
       });
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -109,16 +109,27 @@ const UserProfile = () => {
     e.preventDefault();
     
     try {
+      // Build update object with only non-empty fields
+      const updateData = {};
+      
+      if (profileForm.bio !== undefined && profileForm.bio !== null) {
+        updateData.bio = profileForm.bio;
+      }
+      if (profileForm.website) {
+        updateData.website_url = profileForm.website;
+      }
+      if (profileForm.github) {
+        updateData.github_url = profileForm.github;
+      }
+      if (profileForm.linkedin) {
+        updateData.linkedin_url = profileForm.linkedin;
+      }
+      if (profileForm.twitter) {
+        updateData.twitter_url = profileForm.twitter;
+      }
+      
       const response = await axios.put(`${API}/users/profile`, 
-        {
-          bio: profileForm.bio,
-          social_links: {
-            website: profileForm.website,
-            github: profileForm.github,
-            linkedin: profileForm.linkedin,
-            twitter: profileForm.twitter
-          }
-        },
+        updateData,
         { withCredentials: true }
       );
       
