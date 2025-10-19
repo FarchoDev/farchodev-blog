@@ -85,9 +85,12 @@ const PostDetail = () => {
       const response = await axios.get(`${API}/posts/${post.id}/bookmark-status`, {
         withCredentials: true
       });
+      console.log('Bookmark status fetched:', response.data); // Debug log
       setIsBookmarked(response.data.is_bookmarked);
     } catch (error) {
       console.error('Error fetching bookmark status:', error);
+      // If there's an error, assume not bookmarked
+      setIsBookmarked(false);
     }
   };
 
