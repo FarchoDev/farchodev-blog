@@ -611,9 +611,9 @@ async def get_bookmark_status(post_id: str, request: Request):
     try:
         user = await get_current_user(request, db)
         existing = await db.bookmarks.find_one({"post_id": post_id, "user_id": user.id})
-        return {"bookmarked": existing is not None}
+        return {"is_bookmarked": existing is not None}
     except HTTPException:
-        return {"bookmarked": False}
+        return {"is_bookmarked": False}
 
 # Enhanced comments for authenticated users
 @api_router.post("/comments", response_model=Comment)
