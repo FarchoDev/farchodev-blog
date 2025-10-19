@@ -145,16 +145,26 @@ const PostDetail = () => {
         toast.success('Post removido de guardados');
       } else {
         // Add bookmark
-        await axios.post(`${API}/bookmarks`, 
+        const response = await axios.post(`${API}/bookmarks`, 
           { post_id: post.id }, 
           { withCredentials: true }
         );
+        
+        // Explicitly set to true after successful save
         setIsBookmarked(true);
-        toast.success('Post guardado');
+        toast.success('¡Post guardado exitosamente!');
       }
     } catch (error) {
       console.error('Error toggling bookmark:', error);
-      toast.error('Error al guardar post');
+      
+      // More specific error handling
+      if (error.response?.status === 400) {
+        // If backend says it's already bookmarked, update state
+        setIsBookmarked(true);
+        toast.info('Este post ya estaba guardado');
+      } else {
+        toast.error('Error al guardar post. Intenta de nuevo.');
+      }
     } finally {
       setBookmarkLoading(false);
     }
