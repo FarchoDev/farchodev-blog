@@ -387,18 +387,20 @@ const PostDetail = () => {
               <button 
                 onClick={handleBookmark}
                 disabled={bookmarkLoading}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all font-medium ${
                   isBookmarked 
-                    ? 'bg-teal-100 text-teal-700 hover:bg-teal-200' 
+                    ? 'bg-teal-600 text-white hover:bg-teal-700 shadow-md' 
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                } disabled:opacity-50`}
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
                 data-testid="bookmark-button"
+                title={isBookmarked ? 'Quitar de guardados' : 'Guardar post'}
               >
                 <Bookmark 
                   size={20} 
                   fill={isBookmarked ? 'currentColor' : 'none'}
+                  className={isBookmarked ? 'animate-pulse-once' : ''}
                 />
-                <span className="font-medium">{isBookmarked ? 'Guardado' : 'Guardar'}</span>
+                <span>{isBookmarked ? '✓ Guardado' : 'Guardar'}</span>
               </button>
             </div>
           </div>
