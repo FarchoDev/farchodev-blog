@@ -15,7 +15,7 @@ import secrets
 
 # Import auth module
 from auth import (
-    User, UserRegister, UserLogin, UserPublic, UserProfile,
+    User, UserRegister, UserLogin, UserPublic, UserProfile, UserProfileUpdate,
     hash_password, verify_password, create_access_token, 
     get_current_user, require_admin,
     create_github_auth_url, exchange_github_code, get_github_user,
