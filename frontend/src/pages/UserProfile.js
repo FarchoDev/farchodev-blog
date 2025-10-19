@@ -381,13 +381,13 @@ const UserProfile = () => {
                         </p>
                       </div>
 
-                      {profile?.social_links && Object.keys(profile.social_links).length > 0 && (
+                      {(profile?.website_url || profile?.github_url || profile?.linkedin_url || profile?.twitter_url) && (
                         <div>
                           <h3 className="font-semibold text-gray-900 mb-3">Redes Sociales</h3>
                           <div className="flex flex-wrap gap-3">
-                            {profile.social_links.website && (
+                            {profile.website_url && (
                               <a 
-                                href={profile.social_links.website}
+                                href={profile.website_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -396,9 +396,9 @@ const UserProfile = () => {
                                 Website
                               </a>
                             )}
-                            {profile.social_links.github && (
+                            {profile.github_url && (
                               <a 
-                                href={`https://github.com/${profile.social_links.github}`}
+                                href={profile.github_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -407,9 +407,9 @@ const UserProfile = () => {
                                 GitHub
                               </a>
                             )}
-                            {profile.social_links.linkedin && (
+                            {profile.linkedin_url && (
                               <a 
-                                href={`https://linkedin.com/in/${profile.social_links.linkedin}`}
+                                href={profile.linkedin_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -418,9 +418,9 @@ const UserProfile = () => {
                                 LinkedIn
                               </a>
                             )}
-                            {profile.social_links.twitter && (
+                            {profile.twitter_url && (
                               <a 
-                                href={`https://twitter.com/${profile.social_links.twitter.replace('@', '')}`}
+                                href={profile.twitter_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
