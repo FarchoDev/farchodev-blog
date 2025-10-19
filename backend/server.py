@@ -548,18 +548,21 @@ async def get_post_likes(post_id: str, request: Request):
     
     return {"total_likes": total_likes, "user_liked": user_liked}
 
+class BookmarkCreate(BaseModel):
+    post_id: str
+
 @api_router.post("/bookmarks")
-async def add_bookmark(post_id: str, request: Request):
+async def add_bookmark(bookmark_data: BookmarkCreate, request: Request):
     """Add a bookmark"""
     user = await get_current_user(request, db)
     
     # Check if already bookmarked
-    existing = await db.bookmarks.find_one({"post_id": post_id, "user_id": user.id})
+    existing = await db.bookmarks.find_one({"post_id": bookmark_data.post_id, "user_id": user.id})
     if existing:
         raise HTTPException(status_code=400, detail="Already bookmarked")
     
     # Create bookmark
-    bookmark = Bookmark(post_id=post_id, user_id=user.id)
+    bookmark = Bookmark(post_id=bookmark_data.post_id, user_id=user.id)
     doc = bookmark.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     
