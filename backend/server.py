@@ -305,8 +305,8 @@ async def register(user_data: UserRegister, response: Response):
         key="session_token",
         value=token,
         httponly=True,
-        secure=True,
-        samesite="none",
+        secure=COOKIE_SECURE,
+        samesite=COOKIE_SAMESITE,
         max_age=60 * 60 * 24 * 7  # 7 days
     )
     
@@ -351,8 +351,8 @@ async def login(credentials: UserLogin, response: Response):
         key="session_token",
         value=token,
         httponly=True,
-        secure=True,
-        samesite="none",
+        secure=COOKIE_SECURE,
+        samesite=COOKIE_SAMESITE,
         max_age=60 * 60 * 24 * 7  # 7 days
     )
     
@@ -427,8 +427,8 @@ async def google_callback(session_id: str, response: Response):
         key="session_token",
         value=session_token,
         httponly=True,
-        secure=True,
-        samesite="none",
+        secure=COOKIE_SECURE,
+        samesite=COOKIE_SAMESITE,
         max_age=60 * 60 * 24 * 7  # 7 days
     )
     
@@ -486,8 +486,8 @@ async def github_callback(code: str, state: str, response: Response):
         key="session_token",
         value=session_token,
         httponly=True,
-        secure=True,
-        samesite="none",
+        secure=COOKIE_SECURE,
+        samesite=COOKIE_SAMESITE,
         max_age=60 * 60 * 24 * 7  # 7 days
     )
     
