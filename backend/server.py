@@ -31,6 +31,11 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# Environment detection
+IS_PRODUCTION = os.environ.get('ENV', 'development') == 'production'
+COOKIE_SECURE = IS_PRODUCTION  # Only secure cookies in production
+COOKIE_SAMESITE = "none" if IS_PRODUCTION else "lax"  # lax for development
+
 # Create the main app without a prefix
 app = FastAPI()
 
