@@ -377,8 +377,8 @@ async def logout(request: Request, response: Response):
     response.delete_cookie(
         key="session_token",
         httponly=True,
-        secure=True,
-        samesite="none"
+        secure=COOKIE_SECURE,
+        samesite=COOKIE_SAMESITE
     )
     
     return {"message": "Logged out successfully"}
