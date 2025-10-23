@@ -1053,12 +1053,15 @@ REACT_APP_BACKEND_URL="http://localhost:8001"
 MONGO_URL="mongodb+srv://user:pass@cluster.mongodb.net/dbname"
 CORS_ORIGINS="https://tudominio.com"
 JWT_SECRET_KEY="<clave-super-secreta-aleatoria>"
+ENV="production"  # ⚠️ IMPORTANTE: Habilita cookies seguras (HTTPS)
 ```
 
 **Frontend**:
 ```bash
 REACT_APP_BACKEND_URL="https://api.tudominio.com"
 ```
+
+⚠️ **NOTA**: En producción (`ENV="production"`), las cookies automáticamente utilizan `secure=True` y `samesite="none"`, lo que **requiere HTTPS obligatoriamente**.
 
 ---
 
