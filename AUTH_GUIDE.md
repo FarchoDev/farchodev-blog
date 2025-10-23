@@ -1115,10 +1115,12 @@ curl -X GET http://localhost:8001/api/admin/posts \
 **Problema**: El usuario se desloguea al refrescar la página.
 
 **Soluciones**:
-1. Verifica `credentials: 'include'` en el frontend
-2. Verifica `withCredentials: true` en axios
-3. Usa `localhost` (no `127.0.0.1`) en desarrollo
-4. Verifica que CORS esté configurado correctamente
+1. ✅ Verifica `credentials: 'include'` en todas las peticiones fetch del frontend
+2. ✅ Verifica `withCredentials: true` en axios
+3. ✅ Usa `localhost` (no `127.0.0.1`) en desarrollo
+4. ✅ Verifica que CORS esté configurado correctamente con `allow_credentials=True`
+5. ✅ En desarrollo, asegúrate de que `ENV="development"` para usar cookies no-secure
+6. ✅ Verifica que el dominio del frontend coincida con el configurado en CORS_ORIGINS
 
 ### Error: 401 Unauthorized en peticiones admin
 
