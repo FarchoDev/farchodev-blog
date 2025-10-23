@@ -343,44 +343,34 @@
 - Solución de problemas comunes
 - Changelog
 
-✅ **DOCUMENTATION_COMPLETE.md** - Documentación técnica completa con:
+✅ **DOCS.md** - Documentación técnica consolidada con:
 - Stack tecnológico detallado
-- Arquitectura del sistema
+- Arquitectura del sistema completa
 - Modelos de datos con ejemplos
 - API Reference completa (todos los endpoints)
 - Frontend Components detallados
-- Configuración de desarrollo
+- Configuración de desarrollo y producción
 - Deployment
 - Testing
 - Troubleshooting
-
-✅ **ARCHITECTURE.md** - Arquitectura técnica con:
-- Visión general de capas
-- Patrones de diseño
-- Flujo de datos
-- Estructura de base de datos
-- Manejo de estado
-- Seguridad
-- Escalabilidad
+- *(Consolidado desde DOCUMENTATION_COMPLETE.md, ARCHITECTURE.md y QUICK_START_GUIDE.md)*
 
 ✅ **AUTH_GUIDE.md** - Guía completa de autenticación con:
 - Arquitectura del sistema
 - Modelos de datos
-- Flujos de autenticación detallados
-- API Endpoints
-- Implementación frontend
-- Seguridad
-- Configuración
-- Testing
-- Troubleshooting
+- Flujos de autenticación detallados (JWT, Google OAuth, GitHub OAuth)
+- API Endpoints con ejemplos
+- Implementación frontend (AuthContext, ProtectedRoute)
+- Seguridad (bcrypt, JWT, cookies HttpOnly)
+- Configuración según entorno
+- Testing exhaustivo
+- Troubleshooting detallado
 
 ✅ **ADMIN_SETUP.md** - Configuración de admin con:
 - Método 1: Admin Emails automáticos
 - Método 2: Script de promoción
 - Verificación de acceso
 - Troubleshooting
-
-✅ **QUICK_START_GUIDE.md** - Guía de inicio rápido
 
 ✅ **test_result.md** - Historial de testing con:
 - Estado de todas las tareas
