@@ -1005,6 +1005,101 @@ async def get_stats(request: Request):
         "total_views": total_views
     }
 
+@api_router.get("/admin/newsletter/subscribers", response_model=List[Newsletter])
+async def get_newsletter_subscribers(request: Request):
+    """Get all newsletter subscribers (admin)"""
+    await require_admin(request, db)
+    
+    # Get all subscribers sorted by subscription date (newest first)
+    subscribers = await db.newsletter.find(
+        {},
+        {"_id": 0}
+    ).sort("subscribed_at", -1).to_list(10000)
+    
+    # Convert datetime strings to datetime objects if needed
+    for subscriber in subscribers:
+        if 'subscribed_at' in subscriber and isinstance(subscriber['subscribed_at'], str):
+            subscriber['subscribed_at'] = datetime.fromisoformat(subscriber['subscribed_at'])
+    
+    return subscribers
+
+@api_router.get("/admin/newsletter/export")
+async def export_newsletter_subscribers(request: Request):
+    """Export newsletter subscribers as CSV (admin)"""
+    from fastapi.responses import StreamingResponse
+    import io
+    import csv
+    
+    await require_admin(request, db)
+    
+    # Get all active subscribers
+    subscribers = await db.newsletter.find(
+        {"active": True},
+        {"_id": 0, "email": 1, "subscribed_at": 1, "active": 1}
+    ).sort("subscribed_at", -1).to_list(10000)
+    
+    # Create CSV in memory
+    output = io.StringIO()
+    writer = csv.writer(output)
+    
+    # Write header
+    writer.writerow(['Email', 'Fecha de Suscripción', 'Estado'])
+    
+    # Write data
+    for sub in subscribers:
+        subscribed_date = sub.get('subscribed_at')
+        if isinstance(subscribed_date, str):
+            subscribed_date = datetime.fromisoformat(subscribed_date)
+        
+        formatted_date = subscribed_date.strftime('%Y-%m-%d %H:%M:%S') if subscribed_date else 'N/A'
+        status = 'Activo' if sub.get('active', True) else 'Inactivo'
+        
+        writer.writerow([sub['email'], formatted_date, status])
+    
+    # Prepare response
+    output.seek(0)
+    
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": f"attachment; filename=newsletter_subscribers_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        }
+    )
+
+@api_router.delete("/admin/newsletter/subscribers/{email}")
+async def delete_newsletter_subscriber(email: str, request: Request):
+    """Delete a newsletter subscriber (admin)"""
+    await require_admin(request, db)
+    
+    result = await db.newsletter.delete_one({"email": email})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Subscriber not found")
+    
+    return {"message": "Subscriber deleted successfully"}
+
+@api_router.put("/admin/newsletter/subscribers/{email}/toggle")
+async def toggle_newsletter_subscriber(email: str, request: Request):
+    """Toggle subscriber active status (admin)"""
+    await require_admin(request, db)
+    
+    # Get current status
+    subscriber = await db.newsletter.find_one({"email": email})
+    
+    if not subscriber:
+        raise HTTPException(status_code=404, detail="Subscriber not found")
+    
+    # Toggle status
+    new_status = not subscriber.get('active', True)
+    
+    await db.newsletter.update_one(
+        {"email": email},
+        {"$set": {"active": new_status}}
+    )
+    
+    return {"message": f"Subscriber {'activated' if new_status else 'deactivated'}", "active": new_status}
+
 # Include the router in the main app
 app.include_router(api_router)
 
