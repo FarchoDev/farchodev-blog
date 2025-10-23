@@ -50,6 +50,7 @@ async def list_users():
     
     if not users:
         print("❌ No hay usuarios en la base de datos")
+        client.close()
         return
     
     print("\n📋 USUARIOS REGISTRADOS:")
@@ -59,7 +60,7 @@ async def list_users():
         print(f"{role_icon} {user.get('name'):30} | {user.get('email'):35} | {user.get('role'):5} | {user.get('provider')}")
     print("-" * 80)
     
-    await client.close()
+    client.close()
 
 async def main():
     if len(sys.argv) < 2:
