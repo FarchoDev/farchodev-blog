@@ -1189,4 +1189,4 @@ db.users.updateOne(
 
 ---
 
-**¿Preguntas o problemas?** Consulta [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) o abre un issue en GitHub.
+**¿Preguntas o problemas?** Consulta la [sección de Troubleshooting](#troubleshooting) arriba o revisa [DOCS.md](./DOCS.md) para más información técnica.
