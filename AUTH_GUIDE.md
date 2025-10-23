@@ -28,11 +28,13 @@ El sistema de autenticación de FarchoDev Blog proporciona múltiples métodos d
 ### Características Principales
 
 - ✅ Registro e inicio de sesión con JWT
-- ✅ Gestión de sesiones con cookies HttpOnly
+- ✅ **Gestión segura de sesiones con cookies HttpOnly** (protege contra XSS)
 - ✅ Tokens con expiración automática (7 días)
-- ✅ Passwords hasheados con bcrypt
+- ✅ Passwords hasheados con bcrypt (12 rounds)
 - ✅ Autorización basada en roles (user/admin)
 - ✅ Middleware de protección de rutas
+- ✅ Configuración automática de cookies según entorno (dev/prod)
+- ✅ Protección CSRF con SameSite cookies
 - ✅ Perfil de usuario editable
 - ✅ Sistema de actividad del usuario
 
