@@ -2,9 +2,34 @@
 
 ## 📊 Estado del Proyecto
 
-**Versión**: 2.0.0  
+**Versión**: 2.1.0  
 **Última actualización**: Enero 2025  
 **Estado**: ✅ Producción Ready
+
+---
+
+## 📝 Historial de Cambios
+
+### v2.1.0 - Reorganización de Documentación (Enero 2025)
+
+**🗂️ Documentación**:
+- ✅ Reorganización completa de documentación (reducción de 10 a 6 documentos)
+- ✅ Actualización de `AUTH_GUIDE.md` con mejoras en cookies HttpOnly
+- ✅ Documentación de configuración automática de cookies según entorno
+- ✅ Mejoras en troubleshooting de cookies y autenticación
+- ✅ Consolidación de `DOCS.md` con toda la documentación técnica
+- ✅ Actualización de `README.md` con features actuales
+- ✅ Mantenimiento de documentos especializados (AUTH_GUIDE, ADMIN_SETUP, SETUP_WINDOWS)
+
+**🔧 Mejoras Técnicas Documentadas**:
+- Variables de entorno `ENV` para configuración automática de cookies
+- `COOKIE_SECURE` y `COOKIE_SAMESITE` según entorno (dev/prod)
+- Mejor explicación de HttpOnly cookies y protección XSS
+- Guías actualizadas de troubleshooting
+
+---
+
+### v2.0.0 - Sistema de Autenticación Completo (Enero 2025)
 
 ---
 
