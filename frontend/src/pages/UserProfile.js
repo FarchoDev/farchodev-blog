@@ -512,22 +512,62 @@ const UserProfile = () => {
                   {activity?.recent_comments && activity.recent_comments.length > 0 ? (
                     <div className="space-y-4">
                       {activity.recent_comments.map(comment => (
-                        <div key={comment.id} className="p-4 border border-gray-200 rounded-lg">
+                        <div 
+                          key={comment.id} 
+                          className={`p-4 border rounded-lg transition-all ${
+                            comment.post_exists 
+                              ? 'border-gray-200 hover:border-teal-300 cursor-pointer' 
+                              : 'border-gray-300 bg-gray-50'
+                          }`}
+                          onClick={() => {
+                            if (comment.post_exists && comment.post_slug) {
+                              window.location.href = `/post/${comment.post_slug}`;
+                            }
+                          }}
+                        >
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex-1">
-                              <Link 
-                                to={`/post/${comment.post_slug}`}
-                                className="text-sm font-semibold text-teal-700 hover:text-teal-800 mb-1 block"
-                              >
-                                {comment.post_title}
-                              </Link>
+                              {comment.post_exists ? (
+                                <div className="flex items-center gap-2 mb-2">
+                                  <span className="text-sm font-semibold text-gray-900">
+                                    {comment.post_title}
+                                  </span>
+                                  {!comment.post_published && (
+                                    <span className="px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded-full">
+                                      No publicado
+                                    </span>
+                                  )}
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-2 mb-2">
+                                  <span className="text-sm font-semibold text-gray-500">
+                                    {comment.post_title}
+                                  </span>
+                                  <span className="px-2 py-0.5 bg-red-100 text-red-700 text-xs rounded-full flex items-center gap-1">
+                                    <X size={12} />
+                                    Eliminado
+                                  </span>
+                                </div>
+                              )}
                               <p className="text-xs text-gray-500">
-                                {format(new Date(comment.created_at), "d 'de' MMMM, yyyy", { locale: es })}
+                                {format(new Date(comment.created_at), "d 'de' MMMM, yyyy 'a las' HH:mm", { locale: es })}
                                 {comment.updated_at && comment.updated_at !== comment.created_at && ' (editado)'}
                               </p>
                             </div>
+                            {comment.post_exists && comment.post_slug && (
+                              <span className="text-teal-600 text-sm font-medium">
+                                Ver post →
+                              </span>
+                            )}
                           </div>
-                          <p className="text-gray-700">{comment.content}</p>
+                          <p className="text-gray-700 bg-white p-3 rounded-lg border border-gray-100">
+                            "{comment.content}"
+                          </p>
+                          {!comment.post_exists && (
+                            <p className="text-xs text-gray-500 mt-2 italic">
+                              El post al que pertenece este comentario ha sido eliminado
+                            </p>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -535,6 +575,9 @@ const UserProfile = () => {
                     <div className="text-center py-12">
                       <MessageSquare size={48} className="mx-auto text-gray-400 mb-4" />
                       <p className="text-gray-600">No has escrito comentarios aún</p>
+                      <Link to="/blog" className="text-teal-700 hover:text-teal-800 font-semibold mt-4 inline-block">
+                        Explorar artículos
+                      </Link>
                     </div>
                   )}
                 </CardContent>
