@@ -1,11 +1,15 @@
-# 🚀 FarchoDev Blog - Blog de Desarrollo de Software
+# 🚀 FarchoDev Blog
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110.1-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-19.0.0-61DAFB?logo=react)](https://react.dev/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-4.4+-47A248?logo=mongodb)](https://www.mongodb.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.17-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](CHANGELOG.md)
 
-> Plataforma completa de blog especializada en desarrollo de software con sistema de autenticación robusto, construida con FastAPI, React y MongoDB.
+> **Plataforma moderna de blogging** para desarrollo de software con sistema de autenticación completo (JWT + OAuth), features sociales, panel de administración y más. Construida con FastAPI, React y MongoDB.
+
+**[🌐 Demo](#) | [📖 Documentación](DOCS.md) | [🔐 Auth Guide](AUTH_GUIDE.md) | [📝 Changelog](CHANGELOG.md)**
 
 ## 📖 Índice
 
