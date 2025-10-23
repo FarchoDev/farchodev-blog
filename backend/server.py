@@ -733,18 +733,57 @@ async def get_user_activity(request: Request):
     total_likes = await db.post_likes.count_documents({"user_id": user.id})
     total_bookmarks = await db.bookmarks.count_documents({"user_id": user.id})
     
-    # Get recent items
-    recent_comments = await db.comments.find(
+    # Get recent comments with post information
+    comments = await db.comments.find(
+        {"user_id": user.id}, {"_id": 0}
+    ).sort("created_at", -1).limit(50).to_list(50)
+    
+    # Enrich comments with post data
+    recent_comments = []
+    for comment in comments:
+        post = await db.posts.find_one({"id": comment["post_id"]}, {"_id": 0, "title": 1, "slug": 1, "id": 1, "published": 1})
+        comment_data = {
+            **comment,
+            "post_title": post["title"] if post else "[Post eliminado]",
+            "post_slug": post["slug"] if post else None,
+            "post_exists": post is not None,
+            "post_published": post.get("published", False) if post else False
+        }
+        recent_comments.append(comment_data)
+    
+    # Get recent likes with post information
+    likes = await db.post_likes.find(
         {"user_id": user.id}, {"_id": 0}
     ).sort("created_at", -1).limit(5).to_list(5)
     
-    recent_likes = await db.post_likes.find(
+    # Enrich likes with post data
+    recent_likes = []
+    for like in likes:
+        post = await db.posts.find_one({"id": like["post_id"]}, {"_id": 0, "title": 1, "slug": 1})
+        if post:  # Only show likes for existing posts
+            like_data = {
+                **like,
+                "post_title": post["title"],
+                "post_slug": post["slug"]
+            }
+            recent_likes.append(like_data)
+    
+    # Get recent bookmarks with post information
+    bookmarks = await db.bookmarks.find(
         {"user_id": user.id}, {"_id": 0}
     ).sort("created_at", -1).limit(5).to_list(5)
     
-    recent_bookmarks = await db.bookmarks.find(
-        {"user_id": user.id}, {"_id": 0}
-    ).sort("created_at", -1).limit(5).to_list(5)
+    # Enrich bookmarks with post data
+    recent_bookmarks = []
+    for bookmark in bookmarks:
+        post = await db.posts.find_one({"id": bookmark["post_id"]}, {"_id": 0, "title": 1, "slug": 1})
+        if post:  # Only show bookmarks for existing posts
+            bookmark_data = {
+                **bookmark,
+                "post_title": post["title"],
+                "post_slug": post["slug"]
+            }
+            recent_bookmarks.append(bookmark_data)
     
     return UserActivity(
         total_comments=total_comments,
