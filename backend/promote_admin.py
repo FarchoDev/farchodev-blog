@@ -22,6 +22,7 @@ async def promote_to_admin(email: str):
     
     if not user:
         print(f"❌ Usuario no encontrado: {email}")
+        client.close()
         return False
     
     # Update role to admin
@@ -34,12 +35,12 @@ async def promote_to_admin(email: str):
         print(f"✅ Usuario {email} promovido a admin exitosamente!")
         print(f"   Nombre: {user.get('name')}")
         print(f"   Provider: {user.get('provider')}")
+        client.close()
         return True
     else:
         print(f"ℹ️  Usuario {email} ya era admin")
+        client.close()
         return True
-    
-    await client.close()
 
 async def list_users():
     """List all users"""
