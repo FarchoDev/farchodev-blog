@@ -472,4 +472,6 @@ Si tienes problemas:
 
 **¡Listo! Tu entorno de desarrollo está configurado.** 🎉
 
-Para información más avanzada, consulta [DOCUMENTATION.md](./DOCUMENTATION.md).
+Para información más avanzada, consulta:
+- [DOCS.md](./DOCS.md) - Documentación técnica completa
+- [AUTH_GUIDE.md](./AUTH_GUIDE.md) - Guía del sistema de autenticación
