@@ -11,18 +11,21 @@
 
 **[🌐 Demo](#) | [📖 Documentación](DOCS.md) | [🔐 Auth Guide](AUTH_GUIDE.md) | [📝 Changelog](CHANGELOG.md)**
 
-## 📖 Índice
+---
 
-- [Características](#-características)
-- [Stack Tecnológico](#-stack-tecnológico)
-- [Inicio Rápido](#-inicio-rápido)
-- [Sistema de Autenticación](#-sistema-de-autenticación)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Documentación Completa](#-documentación-completa)
-- [API Endpoints](#-api-endpoints)
-- [Solución de Problemas](#-solución-de-problemas)
-- [Contribuir](#-contribuir)
-- [Licencia](#-licencia)
+## 📖 Contenido
+
+- [✨ Características](#-características)
+- [🛠 Stack Tecnológico](#-stack-tecnológico)
+- [🚀 Inicio Rápido](#-inicio-rápido)
+- [📁 Estructura del Proyecto](#-estructura-del-proyecto)
+- [🔌 API Endpoints](#-api-endpoints)
+- [📚 Documentación](#-documentación)
+- [🐛 Solución de Problemas](#-solución-de-problemas)
+- [🤝 Contribuir](#-contribuir)
+- [📄 Licencia](#-licencia)
+
+---
 
 ## ✨ Características
 
