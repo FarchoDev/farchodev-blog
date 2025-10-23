@@ -932,18 +932,31 @@ except jwt.InvalidTokenError:
 - Expiración: 7 días
 - Secret Key: Mínimo 256 bits, generado aleatoriamente
 
-### 3. Cookies Seguras
+### 3. Cookies Seguras (HttpOnly)
+
+Las cookies de sesión utilizan la bandera `HttpOnly` para prevenir ataques XSS y `SameSite` para proteger contra CSRF.
 
 ```python
+# Configuración automática según entorno
+IS_PRODUCTION = os.environ.get('ENV', 'development') == 'production'
+COOKIE_SECURE = IS_PRODUCTION  # Solo secure en producción (HTTPS)
+COOKIE_SAMESITE = "none" if IS_PRODUCTION else "lax"
+
 response.set_cookie(
     key="session_token",
     value=token,
-    httponly=True,      # No accesible desde JavaScript
-    secure=True,        # Solo HTTPS (producción)
-    samesite="lax",     # Protección CSRF
-    max_age=604800      # 7 días en segundos
+    httponly=True,        # ⚠️ CRÍTICO: No accesible desde JavaScript
+    secure=COOKIE_SECURE, # True en producción (requiere HTTPS)
+    samesite=COOKIE_SAMESITE,  # "lax" en dev, "none" en prod
+    max_age=604800        # 7 días en segundos
 )
 ```
+
+**Características de Seguridad**:
+- ✅ **HttpOnly=True**: Previene acceso desde JavaScript (protege contra XSS)
+- ✅ **Secure**: Requiere HTTPS en producción
+- ✅ **SameSite**: "lax" en desarrollo, "none" en producción (protege contra CSRF)
+- ✅ **Max-Age**: Expiración automática después de 7 días
 
 ### 4. CORS Configuration
 
