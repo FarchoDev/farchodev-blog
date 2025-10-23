@@ -140,7 +140,7 @@ async def show_recent_activity():
     
     print("=" * 60)
     
-    # Close connection
+    # Close connection after all operations
     client.close()
 
 async def main():
