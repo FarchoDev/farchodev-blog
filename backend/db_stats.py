@@ -146,7 +146,11 @@ async def show_recent_activity():
     # Close connection
     client.close()
 
+async def main():
+    """Main function"""
+    await show_db_stats()
+    await show_recent_activity()
+
 if __name__ == "__main__":
     print("\n🔍 Analizando base de datos...\n")
-    asyncio.run(show_db_stats())
-    asyncio.run(show_recent_activity())
+    asyncio.run(main())
