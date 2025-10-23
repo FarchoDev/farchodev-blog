@@ -1024,6 +1024,9 @@ JWT_SECRET_KEY="tu-clave-super-secreta-minimo-256-bits"
 # Admin Emails (separados por comas)
 ADMIN_EMAILS="admin@ejemplo.com,otro-admin@ejemplo.com"
 
+# Environment (development/production)
+ENV="development"  # En producción: "production"
+
 # GitHub OAuth (opcional)
 GITHUB_CLIENT_ID="tu-client-id"
 GITHUB_CLIENT_SECRET="tu-client-secret"
