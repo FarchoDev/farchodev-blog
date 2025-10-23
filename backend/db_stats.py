@@ -100,9 +100,6 @@ async def show_db_stats():
     print("=" * 60)
     print("✅ Para ver más detalles, usa MongoDB Compass o mongosh")
     print("=" * 60)
-    
-    # Close connection
-    client.close()
 
 async def show_recent_activity():
     """Show recent activity"""
