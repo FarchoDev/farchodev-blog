@@ -13,6 +13,33 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			// Colores del logo FarchoDev
+  			'farcho-blue': {
+  				DEFAULT: '#0E4CB2',
+  				50: '#E8F4FF',
+  				100: '#D1E9FF',
+  				200: '#A3D3FF',
+  				300: '#75BDFF',
+  				400: '#47A7FF',
+  				500: '#1990FF',
+  				600: '#0E4CB2',
+  				700: '#0A3A85',
+  				800: '#072857',
+  				900: '#03152A',
+  			},
+  			'farcho-gold': {
+  				DEFAULT: '#B89A4B',
+  				50: '#F9F6ED',
+  				100: '#F3EDDB',
+  				200: '#E7DBB7',
+  				300: '#DBC993',
+  				400: '#CFB76F',
+  				500: '#B89A4B',
+  				600: '#947B3C',
+  				700: '#705C2D',
+  				800: '#4C3D1E',
+  				900: '#281F0F',
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
