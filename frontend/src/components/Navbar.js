@@ -188,9 +188,14 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-3" data-testid="mobile-menu">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-700">
+              <span className="text-sm text-gray-600 dark:text-gray-400">Tema</span>
+              <ThemeToggle />
+            </div>
+            
             <Link 
               to="/" 
-              className="block text-gray-600 hover:text-blue-700" 
+              className="block text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400" 
               onClick={() => setIsMenuOpen(false)}
               data-testid="mobile-nav-home"
             >
