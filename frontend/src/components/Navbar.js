@@ -56,7 +56,7 @@ const Navbar = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-700 to-blue-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">F</span>
             </div>
-            <span className="text-xl font-bold text-gray-900" style={{fontFamily: 'Space Grotesk'}}>FarchoDev</span>
+            <span className="text-xl font-bold text-gray-900 dark:text-white" style={{fontFamily: 'Space Grotesk'}}>FarchoDev</span>
           </Link>
 
           {/* Desktop Menu */}
