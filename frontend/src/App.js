@@ -89,7 +89,8 @@ function App() {
               } 
             />
           </Routes>
-        </AuthProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </div>
   );
