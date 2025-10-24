@@ -95,7 +95,7 @@ const Navbar = () => {
                 {isAdmin && (
                   <Link 
                     to="/admin" 
-                    className="text-sm font-medium text-gray-600 hover:text-blue-700 transition-colors" 
+                    className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition-colors" 
                     data-testid="nav-admin"
                   >
                     Admin
