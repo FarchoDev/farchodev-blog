@@ -81,7 +81,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Juan Pérez"
                   required
                 />
@@ -99,7 +99,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="tu@email.com"
                   required
                 />
@@ -117,7 +117,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="••••••••"
                   required
                 />
@@ -136,7 +136,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="••••••••"
                   required
                 />
@@ -155,7 +155,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
               <button
                 type="button"
                 onClick={onSwitchToLogin}
-                className="text-sm text-teal-700 hover:text-teal-800 font-medium"
+                className="text-sm text-blue-700 hover:text-blue-800 font-medium"
               >
                 ¿Ya tienes cuenta? Inicia sesión
               </button>

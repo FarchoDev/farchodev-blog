@@ -32,14 +32,14 @@ const NewsletterBox = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-teal-700 to-teal-500 rounded-2xl p-8 text-white" data-testid="newsletter-box">
+    <div className="bg-gradient-to-br from-blue-700 to-blue-500 rounded-2xl p-8 text-white" data-testid="newsletter-box">
       <div className="flex items-center justify-center mb-4">
         <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
           <Mail size={24} />
         </div>
       </div>
       <h3 className="text-2xl font-bold text-center mb-2" style={{fontFamily: 'Space Grotesk'}}>Suscríbete al Newsletter</h3>
-      <p className="text-center text-teal-50 mb-6">Recibe las últimas actualizaciones y artículos directamente en tu inbox</p>
+      <p className="text-center text-blue-50 mb-6">Recibe las últimas actualizaciones y artículos directamente en tu inbox</p>
       
       <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3" data-testid="newsletter-form">
         <input
@@ -53,7 +53,7 @@ const NewsletterBox = () => {
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-3 bg-white text-teal-700 font-semibold rounded-lg hover:bg-teal-50 transition-colors disabled:opacity-50"
+          className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg hover:bg-blue-50 transition-colors disabled:opacity-50"
           data-testid="newsletter-submit-btn"
         >
           {loading ? 'Suscribiendo...' : 'Suscribirse'}

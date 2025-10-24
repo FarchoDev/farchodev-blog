@@ -169,7 +169,7 @@ const UserProfile = () => {
         <div className="pt-24 pb-16 px-4 text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Acceso Denegado</h1>
           <p className="text-gray-600 mb-6">Debes iniciar sesión para ver tu perfil</p>
-          <Link to="/" className="text-teal-700 hover:text-teal-800 font-semibold">
+          <Link to="/" className="text-blue-700 hover:text-blue-800 font-semibold">
             Volver al inicio
           </Link>
         </div>
@@ -200,7 +200,7 @@ const UserProfile = () => {
           {/* Profile Header */}
           <div className="bg-white rounded-2xl p-8 border border-gray-200 mb-8">
             <div className="flex items-start gap-6">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-teal-500 to-teal-700 text-white flex items-center justify-center text-3xl font-bold">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 text-white flex items-center justify-center text-3xl font-bold">
                 {user?.name?.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1">
@@ -450,7 +450,7 @@ const UserProfile = () => {
                     <div className="text-center py-12">
                       <Bookmark size={48} className="mx-auto text-gray-400 mb-4" />
                       <p className="text-gray-600">No tienes posts guardados aún</p>
-                      <Link to="/blog" className="text-teal-700 hover:text-teal-800 font-semibold mt-4 inline-block">
+                      <Link to="/blog" className="text-blue-700 hover:text-blue-800 font-semibold mt-4 inline-block">
                         Explorar artículos
                       </Link>
                     </div>
@@ -471,7 +471,7 @@ const UserProfile = () => {
                           <div className="flex-1 min-w-0">
                             <Link 
                               to={`/post/${post.slug}`}
-                              className="text-lg font-semibold text-gray-900 hover:text-teal-700 block mb-2"
+                              className="text-lg font-semibold text-gray-900 hover:text-blue-700 block mb-2"
                             >
                               {post.title}
                             </Link>
@@ -555,7 +555,7 @@ const UserProfile = () => {
                               </p>
                             </div>
                             {comment.post_exists && comment.post_slug && (
-                              <span className="text-teal-600 text-sm font-medium">
+                              <span className="text-blue-600 text-sm font-medium">
                                 Ver post →
                               </span>
                             )}
@@ -575,7 +575,7 @@ const UserProfile = () => {
                     <div className="text-center py-12">
                       <MessageSquare size={48} className="mx-auto text-gray-400 mb-4" />
                       <p className="text-gray-600">No has escrito comentarios aún</p>
-                      <Link to="/blog" className="text-teal-700 hover:text-teal-800 font-semibold mt-4 inline-block">
+                      <Link to="/blog" className="text-blue-700 hover:text-blue-800 font-semibold mt-4 inline-block">
                         Explorar artículos
                       </Link>
                     </div>
@@ -625,7 +625,7 @@ const UserProfile = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Bookmark size={20} className="text-teal-600" />
+                      <Bookmark size={20} className="text-blue-600" />
                       Guardados Recientes
                     </CardTitle>
                   </CardHeader>

@@ -52,7 +52,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2" data-testid="navbar-logo">
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-700 to-teal-500 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-700 to-blue-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">F</span>
             </div>
             <span className="text-xl font-bold text-gray-900" style={{fontFamily: 'Space Grotesk'}}>FarchoDev</span>
@@ -63,7 +63,7 @@ const Navbar = () => {
             <Link 
               to="/" 
               className={`text-sm font-medium transition-colors ${
-                isActive('/') ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'
+                isActive('/') ? 'text-blue-700' : 'text-gray-600 hover:text-blue-700'
               }`}
               data-testid="nav-home"
             >
@@ -72,7 +72,7 @@ const Navbar = () => {
             <Link 
               to="/blog" 
               className={`text-sm font-medium transition-colors ${
-                isActive('/blog') ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'
+                isActive('/blog') ? 'text-blue-700' : 'text-gray-600 hover:text-blue-700'
               }`}
               data-testid="nav-blog"
             >
@@ -81,7 +81,7 @@ const Navbar = () => {
             <Link 
               to="/about" 
               className={`text-sm font-medium transition-colors ${
-                isActive('/about') ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'
+                isActive('/about') ? 'text-blue-700' : 'text-gray-600 hover:text-blue-700'
               }`}
               data-testid="nav-about"
             >
@@ -94,7 +94,7 @@ const Navbar = () => {
                 {isAdmin && (
                   <Link 
                     to="/admin" 
-                    className="text-sm font-medium text-gray-600 hover:text-teal-700 transition-colors" 
+                    className="text-sm font-medium text-gray-600 hover:text-blue-700 transition-colors" 
                     data-testid="nav-admin"
                   >
                     Admin
@@ -108,7 +108,7 @@ const Navbar = () => {
                     className="flex items-center space-x-2 focus:outline-none"
                     data-testid="user-menu-button"
                   >
-                    <div className="w-9 h-9 bg-gradient-to-br from-teal-700 to-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                    <div className="w-9 h-9 bg-gradient-to-br from-blue-700 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
                       {getInitials(user?.name)}
                     </div>
                   </button>
@@ -154,7 +154,7 @@ const Navbar = () => {
               <div className="flex items-center space-x-3">
                 <button
                   onClick={() => setShowLoginModal(true)}
-                  className="text-sm font-medium text-gray-600 hover:text-teal-700 transition-colors"
+                  className="text-sm font-medium text-gray-600 hover:text-blue-700 transition-colors"
                   data-testid="nav-login"
                 >
                   Iniciar Sesión
@@ -185,7 +185,7 @@ const Navbar = () => {
           <div className="md:hidden py-4 space-y-3" data-testid="mobile-menu">
             <Link 
               to="/" 
-              className="block text-gray-600 hover:text-teal-700" 
+              className="block text-gray-600 hover:text-blue-700" 
               onClick={() => setIsMenuOpen(false)}
               data-testid="mobile-nav-home"
             >
@@ -193,7 +193,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/blog" 
-              className="block text-gray-600 hover:text-teal-700" 
+              className="block text-gray-600 hover:text-blue-700" 
               onClick={() => setIsMenuOpen(false)}
               data-testid="mobile-nav-blog"
             >
@@ -201,7 +201,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/about" 
-              className="block text-gray-600 hover:text-teal-700" 
+              className="block text-gray-600 hover:text-blue-700" 
               onClick={() => setIsMenuOpen(false)}
               data-testid="mobile-nav-about"
             >
@@ -213,7 +213,7 @@ const Navbar = () => {
                 {isAdmin && (
                   <Link 
                     to="/admin" 
-                    className="block text-gray-600 hover:text-teal-700" 
+                    className="block text-gray-600 hover:text-blue-700" 
                     onClick={() => setIsMenuOpen(false)}
                     data-testid="mobile-nav-admin"
                   >
@@ -222,7 +222,7 @@ const Navbar = () => {
                 )}
                 <Link 
                   to="/profile" 
-                  className="block text-gray-600 hover:text-teal-700" 
+                  className="block text-gray-600 hover:text-blue-700" 
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Mi Perfil
@@ -244,7 +244,7 @@ const Navbar = () => {
                     setShowLoginModal(true);
                     setIsMenuOpen(false);
                   }}
-                  className="block w-full text-left text-gray-600 hover:text-teal-700"
+                  className="block w-full text-left text-gray-600 hover:text-blue-700"
                 >
                   Iniciar Sesión
                 </button>
@@ -253,7 +253,7 @@ const Navbar = () => {
                     setShowRegisterModal(true);
                     setIsMenuOpen(false);
                   }}
-                  className="block w-full text-left text-teal-700 font-medium"
+                  className="block w-full text-left text-blue-700 font-medium"
                 >
                   Registrarse
                 </button>

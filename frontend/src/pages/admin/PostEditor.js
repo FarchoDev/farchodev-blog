@@ -109,7 +109,7 @@ const AdminPostEditor = () => {
   return (
     <AdminLayout>
       <div data-testid="admin-post-editor">
-        <Link to="/admin/posts" className="inline-flex items-center text-teal-700 hover:text-teal-800 mb-6" data-testid="back-to-posts">
+        <Link to="/admin/posts" className="inline-flex items-center text-blue-700 hover:text-blue-800 mb-6" data-testid="back-to-posts">
           <ArrowLeft size={20} className="mr-2" />
           Volver a Posts
         </Link>
@@ -127,7 +127,7 @@ const AdminPostEditor = () => {
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa el título del post"
                 data-testid="post-title-input"
               />
@@ -140,7 +140,7 @@ const AdminPostEditor = () => {
                 value={formData.excerpt}
                 onChange={(e) => setFormData({...formData, excerpt: e.target.value})}
                 rows="2"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Breve descripción del post"
                 data-testid="post-excerpt-input"
               />
@@ -153,7 +153,7 @@ const AdminPostEditor = () => {
                 value={formData.content}
                 onChange={(e) => setFormData({...formData, content: e.target.value})}
                 rows="15"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 font-mono text-sm"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
                 placeholder="Escribe el contenido del post (puedes usar Markdown)"
                 data-testid="post-content-input"
               />
@@ -166,7 +166,7 @@ const AdminPostEditor = () => {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({...formData, category: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   data-testid="post-category-select"
                 >
                   <option value="">Selecciona una categoría</option>
@@ -182,7 +182,7 @@ const AdminPostEditor = () => {
                   type="url"
                   value={formData.featured_image_url}
                   onChange={(e) => setFormData({...formData, featured_image_url: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="https://ejemplo.com/imagen.jpg"
                   data-testid="post-image-input"
                 />
@@ -196,7 +196,7 @@ const AdminPostEditor = () => {
                 type="text"
                 value={formData.tags}
                 onChange={(e) => setFormData({...formData, tags: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="javascript, react, tutorial (separados por comas)"
                 data-testid="post-tags-input"
               />
@@ -209,7 +209,7 @@ const AdminPostEditor = () => {
                 id="published"
                 checked={formData.published}
                 onChange={(e) => setFormData({...formData, published: e.target.checked})}
-                className="w-5 h-5 text-teal-700 border-gray-300 rounded focus:ring-teal-500"
+                className="w-5 h-5 text-blue-700 border-gray-300 rounded focus:ring-blue-500"
                 data-testid="post-published-checkbox"
               />
               <label htmlFor="published" className="ml-3 text-sm font-medium text-gray-900">

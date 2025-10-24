@@ -75,7 +75,7 @@ const AdminComments = () => {
           <button
             onClick={() => setFilter('all')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'all' ? 'bg-teal-700 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              filter === 'all' ? 'bg-blue-700 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
             data-testid="filter-all"
           >
@@ -84,7 +84,7 @@ const AdminComments = () => {
           <button
             onClick={() => setFilter('pending')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'pending' ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              filter === 'pending' ? 'bg-#B89A4B text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
             data-testid="filter-pending"
           >

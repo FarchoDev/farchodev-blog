@@ -94,7 +94,7 @@ const AdminPosts = () => {
                       <div className="flex justify-end space-x-2">
                         <Link
                           to={`/admin/posts/edit/${post.id}`}
-                          className="p-2 text-teal-700 hover:bg-teal-50 rounded-lg transition-colors"
+                          className="p-2 text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
                           data-testid={`edit-btn-${post.id}`}
                         >
                           <Edit size={18} />

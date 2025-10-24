@@ -13,7 +13,7 @@ const About = () => {
         <div className="max-w-4xl mx-auto">
           {/* Hero */}
           <div className="text-center mb-16">
-            <div className="w-32 h-32 bg-gradient-to-br from-teal-700 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-32 h-32 bg-gradient-to-br from-blue-700 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-white font-bold text-5xl">F</span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4" style={{fontFamily: 'Space Grotesk'}}>Sobre FarchoDev</h1>
@@ -39,16 +39,16 @@ const About = () => {
 
           {/* Values */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <div className="bg-gradient-to-br from-teal-50 to-white p-6 rounded-xl border border-teal-100">
-              <div className="w-12 h-12 bg-teal-700 rounded-lg flex items-center justify-center mb-4">
+            <div className="bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl border border-blue-100">
+              <div className="w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center mb-4">
                 <Code size={24} className="text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2" style={{fontFamily: 'Space Grotesk'}}>Calidad Técnica</h3>
               <p className="text-gray-700">Contenido verificado y actualizado con las mejores prácticas de la industria.</p>
             </div>
 
-            <div className="bg-gradient-to-br from-orange-50 to-white p-6 rounded-xl border border-orange-100">
-              <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
+            <div className="bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl border border-orange-100">
+              <div className="w-12 h-12 bg-#B89A4B rounded-lg flex items-center justify-center mb-4">
                 <Rocket size={24} className="text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2" style={{fontFamily: 'Space Grotesk'}}>Innovación</h3>
@@ -77,35 +77,35 @@ const About = () => {
             <h2 className="text-2xl font-bold text-gray-900 mb-6" style={{fontFamily: 'Space Grotesk'}}>Temas que Cubrimos</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-teal-700 rounded-full" />
+                <div className="w-2 h-2 bg-blue-700 rounded-full" />
                 <span className="text-gray-700">Desarrollo Web (Frontend & Backend)</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-teal-700 rounded-full" />
+                <div className="w-2 h-2 bg-blue-700 rounded-full" />
                 <span className="text-gray-700">JavaScript & TypeScript</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-teal-700 rounded-full" />
+                <div className="w-2 h-2 bg-blue-700 rounded-full" />
                 <span className="text-gray-700">React, Vue, Angular</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-teal-700 rounded-full" />
+                <div className="w-2 h-2 bg-blue-700 rounded-full" />
                 <span className="text-gray-700">Node.js, Python, Go</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-teal-700 rounded-full" />
+                <div className="w-2 h-2 bg-blue-700 rounded-full" />
                 <span className="text-gray-700">Arquitectura de Software</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-teal-700 rounded-full" />
+                <div className="w-2 h-2 bg-blue-700 rounded-full" />
                 <span className="text-gray-700">DevOps & Cloud</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-teal-700 rounded-full" />
+                <div className="w-2 h-2 bg-blue-700 rounded-full" />
                 <span className="text-gray-700">Bases de Datos</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-teal-700 rounded-full" />
+                <div className="w-2 h-2 bg-blue-700 rounded-full" />
                 <span className="text-gray-700">Mejores Prácticas & Patrones</span>
               </div>
             </div>

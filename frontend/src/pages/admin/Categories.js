@@ -117,7 +117,7 @@ const AdminCategories = () => {
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Ej: Desarrollo Web"
                     data-testid="category-name-input"
                   />
@@ -128,7 +128,7 @@ const AdminCategories = () => {
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
                     rows="2"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Breve descripción de la categoría"
                     data-testid="category-description-input"
                   />
@@ -184,7 +184,7 @@ const AdminCategories = () => {
                   </div>
                 </div>
                 <p className="text-gray-600 text-sm mb-3">{category.description || 'Sin descripción'}</p>
-                <span className="inline-block px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-xs font-medium">
+                <span className="inline-block px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
                   Slug: {category.slug}
                 </span>
               </div>

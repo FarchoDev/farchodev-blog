@@ -71,7 +71,7 @@ const Blog = () => {
                 placeholder="Buscar artículos..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 data-testid="search-input"
               />
             </div>
@@ -83,7 +83,7 @@ const Blog = () => {
                 onClick={() => setSelectedCategory('')}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === '' 
-                    ? 'bg-teal-700 text-white' 
+                    ? 'bg-blue-700 text-white' 
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
                 data-testid="category-all"
@@ -96,7 +96,7 @@ const Blog = () => {
                   onClick={() => setSelectedCategory(cat.name)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     selectedCategory === cat.name 
-                      ? 'bg-teal-700 text-white' 
+                      ? 'bg-blue-700 text-white' 
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                   data-testid={`category-${cat.slug}`}

@@ -45,8 +45,8 @@ const AdminDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               <div className="bg-white rounded-xl p-6 border border-gray-200" data-testid="stat-total-posts">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center">
-                    <FileText size={24} className="text-teal-700" />
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <FileText size={24} className="text-blue-700" />
                   </div>
                   <span className="text-sm text-gray-500">Total</span>
                 </div>
@@ -57,7 +57,7 @@ const AdminDashboard = () => {
               <div className="bg-white rounded-xl p-6 border border-gray-200" data-testid="stat-pending-comments">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <MessageSquare size={24} className="text-orange-500" />
+                    <MessageSquare size={24} className="text-#B89A4B" />
                   </div>
                   <span className="text-sm text-gray-500">Pendientes</span>
                 </div>
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
             <div className="bg-white rounded-xl border border-gray-200 p-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-bold text-gray-900" style={{fontFamily: 'Space Grotesk'}}>Posts Recientes</h2>
-                <Link to="/admin/posts" className="text-teal-700 hover:text-teal-800 font-medium" data-testid="view-all-posts-link">
+                <Link to="/admin/posts" className="text-blue-700 hover:text-blue-800 font-medium" data-testid="view-all-posts-link">
                   Ver todos
                 </Link>
               </div>

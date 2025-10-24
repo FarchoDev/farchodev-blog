@@ -114,17 +114,17 @@ const AdminNewsletter = () => {
         </div>
 
         {/* Stats Card */}
-        <div className="bg-gradient-to-br from-teal-700 to-teal-500 rounded-2xl p-8 text-white mb-8">
+        <div className="bg-gradient-to-br from-blue-700 to-blue-500 rounded-2xl p-8 text-white mb-8">
           <div className="flex items-center space-x-4 mb-4">
             <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
               <Mail size={32} />
             </div>
             <div>
               <h2 className="text-4xl font-bold">{stats?.total_subscribers || 0}</h2>
-              <p className="text-teal-50">Suscriptores Activos</p>
+              <p className="text-blue-50">Suscriptores Activos</p>
             </div>
           </div>
-          <div className="flex gap-6 text-teal-50">
+          <div className="flex gap-6 text-blue-50">
             <div>
               <span className="font-semibold">{activeCount}</span> Activos
             </div>
@@ -143,7 +143,7 @@ const AdminNewsletter = () => {
             <button
               onClick={() => setFilter('all')}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                filter === 'all' ? 'bg-teal-700 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                filter === 'all' ? 'bg-blue-700 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               Todos ({subscribers.length})
@@ -160,7 +160,7 @@ const AdminNewsletter = () => {
             <button
               onClick={() => setFilter('inactive')}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                filter === 'inactive' ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                filter === 'inactive' ? 'bg-#B89A4B text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               <UserX size={16} className="inline mr-1" />
@@ -217,7 +217,7 @@ const AdminNewsletter = () => {
                           onClick={() => toggleSubscriberStatus(subscriber.email)}
                           className={`p-2 rounded-lg transition-colors ${
                             subscriber.active
-                              ? 'text-orange-600 hover:bg-orange-50'
+                              ? 'text-orange-600 hover:bg-yellow-50'
                               : 'text-green-600 hover:bg-green-50'
                           }`}
                           title={subscriber.active ? 'Desactivar' : 'Activar'}

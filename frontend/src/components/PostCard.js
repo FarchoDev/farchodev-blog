@@ -18,11 +18,11 @@ const PostCard = ({ post, featured = false }) => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-teal-500 to-orange-400" />
+            <div className="w-full h-full bg-gradient-to-br from-blue-500 to-orange-400" />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-            <span className="tag bg-orange-500 text-white mb-4">{post.category}</span>
+            <span className="tag bg-#B89A4B text-white mb-4">{post.category}</span>
             <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{fontFamily: 'Space Grotesk'}}>{post.title}</h2>
             <p className="text-gray-200 mb-4 line-clamp-2">{post.excerpt}</p>
             <div className="flex items-center space-x-4 text-sm text-gray-300">
@@ -55,7 +55,7 @@ const PostCard = ({ post, featured = false }) => {
             className="w-full h-48 object-cover"
           />
         ) : (
-          <div className="w-full h-48 bg-gradient-to-br from-teal-500 to-orange-400" />
+          <div className="w-full h-48 bg-gradient-to-br from-blue-500 to-orange-400" />
         )}
         <div className="p-6">
           <span className="tag">{post.category}</span>

@@ -21,7 +21,7 @@ const AdminLayout = ({ children }) => {
       <aside className="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white p-6">
         <div className="mb-8">
           <div className="flex items-center space-x-2 mb-6">
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-700 to-teal-500 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-700 to-blue-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">F</span>
             </div>
             <span className="text-xl font-bold" style={{fontFamily: 'Space Grotesk'}}>FarchoDev</span>
@@ -38,7 +38,7 @@ const AdminLayout = ({ children }) => {
                 to={item.path}
                 className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive(item.path)
-                    ? 'bg-teal-700 text-white'
+                    ? 'bg-blue-700 text-white'
                     : 'text-gray-300 hover:bg-gray-800'
                 }`}
                 data-testid={`admin-nav-${item.label.toLowerCase()}`}

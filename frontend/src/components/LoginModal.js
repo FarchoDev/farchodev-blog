@@ -55,7 +55,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister }) => {
             onClick={() => setActiveTab('local')}
             className={`flex-1 py-3 text-sm font-medium transition-colors ${
               activeTab === 'local'
-                ? 'text-teal-700 border-b-2 border-teal-700'
+                ? 'text-blue-700 border-b-2 border-blue-700'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -65,7 +65,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister }) => {
             onClick={() => setActiveTab('google')}
             className={`flex-1 py-3 text-sm font-medium transition-colors ${
               activeTab === 'google'
-                ? 'text-teal-700 border-b-2 border-teal-700'
+                ? 'text-blue-700 border-b-2 border-blue-700'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -75,7 +75,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister }) => {
             onClick={() => setActiveTab('github')}
             className={`flex-1 py-3 text-sm font-medium transition-colors ${
               activeTab === 'github'
-                ? 'text-teal-700 border-b-2 border-teal-700'
+                ? 'text-blue-700 border-b-2 border-blue-700'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -106,7 +106,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister }) => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="tu@email.com"
                     required
                   />
@@ -124,7 +124,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister }) => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="••••••••"
                     required
                   />
@@ -143,7 +143,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister }) => {
                 <button
                   type="button"
                   onClick={onSwitchToRegister}
-                  className="text-sm text-teal-700 hover:text-teal-800 font-medium"
+                  className="text-sm text-blue-700 hover:text-blue-800 font-medium"
                 >
                   ¿No tienes cuenta? Regístrate
                 </button>

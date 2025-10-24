@@ -306,7 +306,7 @@ const PostDetail = () => {
         <Navbar />
         <div className="pt-24 pb-16 px-4 text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Artículo no encontrado</h1>
-          <Link to="/blog" className="text-teal-700 hover:text-teal-800">Volver al blog</Link>
+          <Link to="/blog" className="text-blue-700 hover:text-blue-800">Volver al blog</Link>
         </div>
       </div>
     );
@@ -321,7 +321,7 @@ const PostDetail = () => {
       <article className="pt-24 pb-16 px-4" data-testid="post-detail">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
-          <Link to="/blog" className="inline-flex items-center text-teal-700 hover:text-teal-800 mb-8" data-testid="back-to-blog">
+          <Link to="/blog" className="inline-flex items-center text-blue-700 hover:text-blue-800 mb-8" data-testid="back-to-blog">
             <ArrowLeft size={20} className="mr-2" />
             Volver al blog
           </Link>
@@ -389,7 +389,7 @@ const PostDetail = () => {
                 disabled={bookmarkLoading}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all font-medium ${
                   isBookmarked 
-                    ? 'bg-teal-600 text-white hover:bg-teal-700 shadow-md' 
+                    ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md' 
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 } disabled:opacity-50 disabled:cursor-not-allowed`}
                 data-testid="bookmark-button"
@@ -449,7 +449,7 @@ const PostDetail = () => {
                       placeholder="Tu nombre"
                       value={commentForm.author_name}
                       onChange={(e) => setCommentForm({...commentForm, author_name: e.target.value})}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       data-testid="comment-name-input"
                     />
                     <input
@@ -457,14 +457,14 @@ const PostDetail = () => {
                       placeholder="Tu email"
                       value={commentForm.author_email}
                       onChange={(e) => setCommentForm({...commentForm, author_email: e.target.value})}
-                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       data-testid="comment-email-input"
                     />
                   </div>
                 )}
                 {isAuthenticated && (
                   <div className="mb-4 flex items-center gap-3 text-sm text-gray-600">
-                    <div className="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-semibold">
+                    <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
                       {user?.name?.charAt(0).toUpperCase()}
                     </div>
                     <span>Comentando como <span className="font-semibold">{user?.name}</span></span>
@@ -475,7 +475,7 @@ const PostDetail = () => {
                   value={commentForm.content}
                   onChange={(e) => setCommentForm({...commentForm, content: e.target.value})}
                   rows="4"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 mb-4"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
                   data-testid="comment-content-input"
                 />
                 {!isAuthenticated && (
@@ -504,7 +504,7 @@ const PostDetail = () => {
                   <div key={comment.id} className="bg-white rounded-xl p-6 border border-gray-200" data-testid={`comment-${comment.id}`}>
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-semibold">
+                        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
                           {comment.author_name?.charAt(0).toUpperCase()}
                         </div>
                         <div>
@@ -524,7 +524,7 @@ const PostDetail = () => {
                               setEditingCommentId(comment.id);
                               setEditCommentContent(comment.content);
                             }}
-                            className="p-2 text-gray-600 hover:text-teal-600 transition-colors"
+                            className="p-2 text-gray-600 hover:text-blue-600 transition-colors"
                             title="Editar"
                           >
                             <Edit2 size={16} />
@@ -546,12 +546,12 @@ const PostDetail = () => {
                           value={editCommentContent}
                           onChange={(e) => setEditCommentContent(e.target.value)}
                           rows="3"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 mb-3"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3"
                         />
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEditComment(comment.id)}
-                            className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                           >
                             Guardar
                           </button>
