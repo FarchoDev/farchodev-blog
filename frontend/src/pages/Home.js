@@ -111,7 +111,7 @@ const Home = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900" style={{fontFamily: 'Space Grotesk'}}>Artículos Recientes</h2>
-              <Link to="/blog" className="text-teal-700 font-medium hover:text-teal-800 flex items-center" data-testid="view-all-posts">
+              <Link to="/blog" className="text-blue-700 font-medium hover:text-blue-800 flex items-center" data-testid="view-all-posts">
                 Ver todos
                 <ArrowRight size={20} className="ml-1" />
               </Link>
