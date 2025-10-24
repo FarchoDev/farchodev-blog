@@ -153,9 +153,10 @@ const Navbar = () => {
               </>
             ) : (
               <div className="flex items-center space-x-3">
+                <ThemeToggle />
                 <button
                   onClick={() => setShowLoginModal(true)}
-                  className="text-sm font-medium text-gray-600 hover:text-blue-700 transition-colors"
+                  className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition-colors"
                   data-testid="nav-login"
                 >
                   Iniciar Sesión
