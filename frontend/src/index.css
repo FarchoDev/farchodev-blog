@@ -26,6 +26,40 @@
     --input: 220 32% 91%;
     --ring: 220 85% 38%;
     --radius: 0.5rem;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+
+  .dark {
+    --background: 220 20% 10%;
+    --foreground: 210 20% 98%;
+    --card: 220 20% 14%;
+    --card-foreground: 210 20% 98%;
+    --popover: 220 20% 14%;
+    --popover-foreground: 210 20% 98%;
+    /* Primary: Azul FarchoDev más brillante para dark mode */
+    --primary: 220 90% 56%;
+    --primary-foreground: 220 20% 10%;
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 220 15% 20%;
+    --muted-foreground: 215 20% 65%;
+    /* Accent: Dorado FarchoDev más brillante para dark mode */
+    --accent: 42 50% 60%;
+    --accent-foreground: 220 20% 10%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 20% 25%;
+    --input: 220 20% 25%;
+    --ring: 220 90% 56%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
