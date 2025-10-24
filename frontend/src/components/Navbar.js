@@ -203,7 +203,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/blog" 
-              className="block text-gray-600 hover:text-blue-700" 
+              className="block text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400" 
               onClick={() => setIsMenuOpen(false)}
               data-testid="mobile-nav-blog"
             >
@@ -211,7 +211,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/about" 
-              className="block text-gray-600 hover:text-blue-700" 
+              className="block text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400" 
               onClick={() => setIsMenuOpen(false)}
               data-testid="mobile-nav-about"
             >
