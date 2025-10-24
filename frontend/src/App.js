@@ -21,8 +21,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <AuthProvider>
-          <Routes>
+        <ThemeProvider>
+          <AuthProvider>
+            <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/post/:slug" element={<PostDetail />} />
