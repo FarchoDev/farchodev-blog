@@ -64,7 +64,7 @@ const Navbar = () => {
             <Link 
               to="/" 
               className={`text-sm font-medium transition-colors ${
-                isActive('/') ? 'text-blue-700' : 'text-gray-600 hover:text-blue-700'
+                isActive('/') ? 'text-blue-700 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400'
               }`}
               data-testid="nav-home"
             >
@@ -73,7 +73,7 @@ const Navbar = () => {
             <Link 
               to="/blog" 
               className={`text-sm font-medium transition-colors ${
-                isActive('/blog') ? 'text-blue-700' : 'text-gray-600 hover:text-blue-700'
+                isActive('/blog') ? 'text-blue-700 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400'
               }`}
               data-testid="nav-blog"
             >
@@ -82,7 +82,7 @@ const Navbar = () => {
             <Link 
               to="/about" 
               className={`text-sm font-medium transition-colors ${
-                isActive('/about') ? 'text-blue-700' : 'text-gray-600 hover:text-blue-700'
+                isActive('/about') ? 'text-blue-700 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400'
               }`}
               data-testid="nav-about"
             >
