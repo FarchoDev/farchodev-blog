@@ -55,7 +55,7 @@ const PostCard = ({ post, featured = false }) => {
             className="w-full h-48 object-cover"
           />
         ) : (
-          <div className="w-full h-48 bg-gradient-to-br from-blue-500 to-orange-400" />
+          <div className="w-full h-48 bg-gradient-to-br from-blue-600 to-yellow-500" style={{background: 'linear-gradient(135deg, #0E4CB2 0%, #B89A4B 100%)'}} />
         )}
         <div className="p-6">
           <span className="tag">{post.category}</span>
