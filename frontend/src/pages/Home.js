@@ -40,7 +40,7 @@ const Home = () => {
       <section className="pt-32 pb-20 px-4" data-testid="hero-section">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center space-x-2 bg-teal-50 text-teal-700 px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full mb-6">
               <Sparkles size={18} />
               <span className="text-sm font-medium">Blog de Desarrollo de Software</span>
             </div>
@@ -70,22 +70,22 @@ const Home = () => {
       <section className="py-16 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-8 rounded-xl bg-gradient-to-br from-teal-50 to-white border border-teal-100" data-testid="feature-tutorials">
-              <div className="w-16 h-16 bg-teal-700 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="text-center p-8 rounded-xl bg-gradient-to-br from-blue-50 to-white border border-blue-100" data-testid="feature-tutorials">
+              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Code size={32} className="text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2" style={{fontFamily: 'Space Grotesk'}}>Tutoriales Prácticos</h3>
               <p className="text-gray-600">Aprende con ejemplos reales y proyectos completos paso a paso.</p>
             </div>
-            <div className="text-center p-8 rounded-xl bg-gradient-to-br from-orange-50 to-white border border-orange-100" data-testid="feature-best-practices">
-              <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="text-center p-8 rounded-xl bg-gradient-to-br from-yellow-50 to-white border border-yellow-100" data-testid="feature-best-practices">
+              <div className="w-16 h-16 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4" style={{background: '#B89A4B'}}>
                 <Zap size={32} className="text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2" style={{fontFamily: 'Space Grotesk'}}>Mejores Prácticas</h3>
               <p className="text-gray-600">Descubre patrones de diseño y técnicas avanzadas de desarrollo.</p>
             </div>
             <div className="text-center p-8 rounded-xl bg-gradient-to-br from-blue-50 to-white border border-blue-100" data-testid="feature-community">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-4" style={{background: '#0E4CB2'}}>
                 <Sparkles size={32} className="text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2" style={{fontFamily: 'Space Grotesk'}}>Comunidad Activa</h3>
