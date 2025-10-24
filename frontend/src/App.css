@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
+  background: linear-gradient(135deg, #0E4CB2 0%, #1a5fc9 100%);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
@@ -29,27 +29,27 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(15, 118, 110, 0.3);
+  box-shadow: 0 10px 25px rgba(14, 76, 178, 0.3);
 }
 
 .btn-secondary {
   background: white;
-  color: #0F766E;
+  color: #0E4CB2;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
-  border: 2px solid #0F766E;
+  border: 2px solid #0E4CB2;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
 
 .btn-secondary:hover {
-  background: #0F766E;
+  background: #0E4CB2;
   color: white;
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #0F766E 0%, #F97316 100%);
+  background: linear-gradient(135deg, #0E4CB2 0%, #B89A4B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
