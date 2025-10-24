@@ -223,7 +223,7 @@ const Navbar = () => {
                 {isAdmin && (
                   <Link 
                     to="/admin" 
-                    className="block text-gray-600 hover:text-blue-700" 
+                    className="block text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400" 
                     onClick={() => setIsMenuOpen(false)}
                     data-testid="mobile-nav-admin"
                   >
@@ -232,7 +232,7 @@ const Navbar = () => {
                 )}
                 <Link 
                   to="/profile" 
-                  className="block text-gray-600 hover:text-blue-700" 
+                  className="block text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400" 
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Mi Perfil
@@ -242,7 +242,7 @@ const Navbar = () => {
                     handleLogout();
                     setIsMenuOpen(false);
                   }}
-                  className="block w-full text-left text-red-600 hover:text-red-700"
+                  className="block w-full text-left text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-500"
                 >
                   Cerrar Sesión
                 </button>
