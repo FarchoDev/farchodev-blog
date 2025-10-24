@@ -48,6 +48,17 @@ h1, h2, h3, h4, h5, h6 {
   color: white;
 }
 
+.dark .btn-secondary {
+  background: transparent;
+  color: #60a5fa;
+  border-color: #60a5fa;
+}
+
+.dark .btn-secondary:hover {
+  background: #60a5fa;
+  color: #1e293b;
+}
+
 .gradient-text {
   background: linear-gradient(135deg, #0E4CB2 0%, #B89A4B 100%);
   -webkit-background-clip: text;
