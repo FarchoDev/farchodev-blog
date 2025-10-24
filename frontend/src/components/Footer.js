@@ -19,16 +19,16 @@ const Footer = () => {
               Blog dedicado al desarrollo de software, tecnología y las mejores prácticas en programación.
             </p>
             <div className="flex space-x-4">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors" data-testid="social-github">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-#B89A4B transition-colors" data-testid="social-github">
                 <Github size={20} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors" data-testid="social-linkedin">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-#B89A4B transition-colors" data-testid="social-linkedin">
                 <Linkedin size={20} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors" data-testid="social-twitter">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-#B89A4B transition-colors" data-testid="social-twitter">
                 <Twitter size={20} />
               </a>
-              <a href="mailto:contact@farchodev.com" className="hover:text-teal-400 transition-colors" data-testid="social-email">
+              <a href="mailto:contact@farchodev.com" className="hover:text-#B89A4B transition-colors" data-testid="social-email">
                 <Mail size={20} />
               </a>
             </div>
@@ -39,16 +39,16 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4" style={{fontFamily: 'Space Grotesk'}}>Enlaces</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:text-teal-400 transition-colors" data-testid="footer-home">Inicio</Link>
+                <Link to="/" className="hover:text-#B89A4B transition-colors" data-testid="footer-home">Inicio</Link>
               </li>
               <li>
-                <Link to="/blog" className="hover:text-teal-400 transition-colors" data-testid="footer-blog">Blog</Link>
+                <Link to="/blog" className="hover:text-#B89A4B transition-colors" data-testid="footer-blog">Blog</Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-teal-400 transition-colors" data-testid="footer-about">Acerca de</Link>
+                <Link to="/about" className="hover:text-#B89A4B transition-colors" data-testid="footer-about">Acerca de</Link>
               </li>
               <li>
-                <Link to="/admin" className="hover:text-teal-400 transition-colors" data-testid="footer-admin">Admin</Link>
+                <Link to="/admin" className="hover:text-#B89A4B transition-colors" data-testid="footer-admin">Admin</Link>
               </li>
             </ul>
           </div>
@@ -58,16 +58,16 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4" style={{fontFamily: 'Space Grotesk'}}>Categorías</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/category/desarrollo-web" className="hover:text-teal-400 transition-colors">Desarrollo Web</Link>
+                <Link to="/category/desarrollo-web" className="hover:text-#B89A4B transition-colors">Desarrollo Web</Link>
               </li>
               <li>
-                <Link to="/category/javascript" className="hover:text-teal-400 transition-colors">JavaScript</Link>
+                <Link to="/category/javascript" className="hover:text-#B89A4B transition-colors">JavaScript</Link>
               </li>
               <li>
-                <Link to="/category/backend" className="hover:text-teal-400 transition-colors">Backend</Link>
+                <Link to="/category/backend" className="hover:text-#B89A4B transition-colors">Backend</Link>
               </li>
               <li>
-                <Link to="/category/devops" className="hover:text-teal-400 transition-colors">DevOps</Link>
+                <Link to="/category/devops" className="hover:text-#B89A4B transition-colors">DevOps</Link>
               </li>
             </ul>
           </div>
