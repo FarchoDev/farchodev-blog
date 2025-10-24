@@ -153,8 +153,8 @@ h1, h2, h3, h4, h5, h6 {
 .tag {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background: #F0FDFA;
-  color: #0F766E;
+  background: #E8F4FF;
+  color: #0E4CB2;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -164,7 +164,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .tag:hover {
-  background: #0F766E;
+  background: #0E4CB2;
   color: white;
   cursor: pointer;
 }
