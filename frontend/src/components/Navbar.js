@@ -102,6 +102,9 @@ const Navbar = () => {
                   </Link>
                 )}
                 
+                {/* Theme Toggle */}
+                <ThemeToggle />
+                
                 {/* User Dropdown */}
                 <div className="relative">
                   <button
