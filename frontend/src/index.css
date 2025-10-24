@@ -4,25 +4,27 @@
 
 @layer base {
   :root {
-    --background: 42 10% 98%;
-    --foreground: 210 24% 16%;
+    --background: 0 0% 98%;
+    --foreground: 220 20% 16%;
     --card: 0 0% 100%;
-    --card-foreground: 210 24% 16%;
+    --card-foreground: 220 20% 16%;
     --popover: 0 0% 100%;
-    --popover-foreground: 210 24% 16%;
-    --primary: 173 80% 25%;
+    --popover-foreground: 220 20% 16%;
+    /* Primary: Azul FarchoDev #0E4CB2 */
+    --primary: 220 85% 38%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 16% 93%;
-    --secondary-foreground: 210 24% 16%;
-    --muted: 210 16% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 24 95% 53%;
+    --secondary: 220 16% 93%;
+    --secondary-foreground: 220 20% 16%;
+    --muted: 220 16% 96%;
+    --muted-foreground: 220 16% 47%;
+    /* Accent: Dorado FarchoDev #B89A4B */
+    --accent: 42 42% 51%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 173 80% 25%;
+    --border: 220 32% 91%;
+    --input: 220 32% 91%;
+    --ring: 220 85% 38%;
     --radius: 0.5rem;
   }
 }
