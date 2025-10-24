@@ -127,7 +127,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .prose blockquote {
-  border-left: 4px solid #0F766E;
+  border-left: 4px solid #0E4CB2;
   padding-left: 1rem;
   margin-left: 0;
   font-style: italic;
@@ -135,13 +135,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .prose a {
-  color: #0F766E;
+  color: #0E4CB2;
   text-decoration: underline;
   transition: color 0.2s;
 }
 
 .prose a:hover {
-  color: #F97316;
+  color: #B89A4B;
 }
 
 .glass-effect {
